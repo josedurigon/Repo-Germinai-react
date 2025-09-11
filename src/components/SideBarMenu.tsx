@@ -17,7 +17,7 @@ const SidebarMenu: React.FC = () => {
     { label: "Home", icon: "pi pi-home", command: () => {navigate("/application/home")} },
     { label: "Usuários", icon: "pi pi-users", items:[
       { label: "Listar Usuários", icon: "pi pi-list" },
-      { label: "Criar Usuário", icon: "pi pi-plus" }
+      { label: "Criar Usuário", icon: "pi pi-plus", command: () => {navigate("/application/user")} }
     ] },
     { label: "Relatórios", icon: "pi pi-chart-bar", items:[
       { label: "Relatório de Eventos", icon: "pi pi-file" },

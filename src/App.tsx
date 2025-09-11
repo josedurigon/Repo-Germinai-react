@@ -7,6 +7,7 @@ import './App.css'
 import Login from './pages/auth/Login'
 import AppLayout from './layouts/AppLayout'
 import ProtectedRoute from './routes/ProtectedRoute'
+import UserRegister from './pages/user/CreateUser'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/application" element={<AppLayout/>}>
             <Route path="home" element={<h1>Home</h1>}/>
+            <Route path="user" element={<UserRegister/>}/>
             <Route path="users" element={<h1>Users</h1>}/>
             <Route path="reports" element={<h1>Reports</h1>}/>
           </Route>

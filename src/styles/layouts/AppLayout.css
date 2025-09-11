@@ -18,9 +18,8 @@
   position: relative;
 }
 .sidebar.collapsed {
-  width: 60px;
+  transform: translateX(-100%); /* joga pra fora */
 }
-
 .sidebar-header {
   padding: 1rem;
   font-size: 1.2rem;
