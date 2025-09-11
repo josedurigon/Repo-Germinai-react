@@ -5,14 +5,25 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Login from './pages/auth/Login'
+import AppLayout from './layouts/AppLayout'
+import ProtectedRoute from './routes/ProtectedRoute'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
       <Routes>
         <Route path="/login" element={<Login/>}/>
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/application" element={<AppLayout/>}>
+            <Route path="home" element={<h1>Home</h1>}/>
+            <Route path="users" element={<h1>Users</h1>}/>
+            <Route path="reports" element={<h1>Reports</h1>}/>
+          </Route>
+        </Route>
+
+        
       </Routes>
     </>
   )

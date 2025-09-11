@@ -1,0 +1,17 @@
+/* PrimeReact usa css vars nos temas Lara. Alinhamos com nossos tokens. */
+:root {
+  --p-primary-color: var(--color-primary);
+  --p-primary-contrast-color: var(--color-primary-fg);
+  --p-surface-0: var(--color-bg);
+  --p-surface-1: var(--color-surface);
+  --p-text-color: var(--color-text);
+  --p-content-border-color: var(--input-border);
+}
+:root[data-theme="dark"] {
+  --p-primary-color: var(--color-primary);
+  --p-primary-contrast-color: var(--color-primary-fg);
+  --p-surface-0: var(--color-bg);
+  --p-surface-1: var(--color-surface);
+  --p-text-color: var(--color-text);
+  --p-content-border-color: var(--input-border);
+}

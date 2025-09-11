@@ -1,0 +1,28 @@
+.fab-top-right {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 1000;
+  
+}
+
+.theme-toggle.p-togglebutton {
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  
+  background: var(--color-surface);
+  color: var(--color-text);
+  opacity: .75;
+  transition: opacity .15s ease, transform .08s ease, background .15s ease, border-color .15s ease;
+}
+/* .theme-toggle.p-togglebutton:hover { opacity: 1; } */
+.theme-toggle.p-togglebutton:active { transform: translateY(1px); }
+
+/* Esconde o label interno do PrimeReact (ficar 100% icônico/minimalista) */
+.theme-toggle .p-button-label { display: none; }
+
+/* Estado ativo (dark) – realce sutil */
+.theme-toggle.p-togglebutton.p-highlight {
+  border-color: var(--color-primary);
+}
