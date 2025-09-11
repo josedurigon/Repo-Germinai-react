@@ -4,7 +4,7 @@
   display: grid;
   place-items: center;
   gap: 1.5rem;
-  background: #f5f6fa;
+  background: var(--color-primary);
   padding: 2rem 1rem;
 }
 

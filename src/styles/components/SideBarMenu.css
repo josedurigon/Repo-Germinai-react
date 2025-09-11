@@ -9,12 +9,12 @@
 }
 
 .sidebar .p-menu {
-  background-color: var(--color-surface) !important;
+  background-color: var(--color-menu) !important;
   border: none !important;
 }
 
 .sidebar .p-menuitem-text {
-  color: var(--color-text) !important;
+  color: var(--color-text-menu) !important;
 }
 
 .sidebar .pi {

@@ -1,4 +1,4 @@
-/* Layout raiz */
+/* AppLayout.css */
 #app-root {
   display: flex;
   min-height: 100vh;
@@ -10,7 +10,7 @@
 /* Sidebar */
 .sidebar {
   width: 240px;
-  background: #407337;
+  background: var(--color-menu);
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -26,7 +26,8 @@
   font-size: 1.2rem;
   font-weight: bold;
   text-align: center;
-  border-bottom: 1px solid #2e3a59;
+  background-color: var(--color-menu-header);
+  border-bottom: 1px solid var(--color-menu-border);
 }
 
 /* Toggle */
@@ -62,15 +63,19 @@
 
 .topbar {
   height: 60px;
-  background: #fff;
-  border-bottom: 1px solid #e6e6e6;
+  background: var(--color-menu-header);
+  border-bottom: 1px solid var(--color-menu-border);
   display: flex;
-  align-items: center;
-  padding: 0 1.5rem;
+    padding: 1rem;
   font-size: 1.2rem;
-  font-weight: 500;
-  color: #1a1f36;
+  font-weight: bold;
+  align-items: center;
+  padding: 1.5rem;
+  height: 62px;
+  color: var(--color-text-antagonica);
 }
+
+
 
 .page-content {
   flex: 1;
