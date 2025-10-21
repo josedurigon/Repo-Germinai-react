@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Route, Routes, Link } from 'react-router-dom'
+import { Route, Routes, Link, Navigate } from 'react-router-dom'
 
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -9,24 +9,39 @@ import AppLayout from './layouts/AppLayout'
 import ProtectedRoute from './routes/ProtectedRoute'
 import UserRegister from './pages/user/CreateUser'
 import UserList from './pages/user/ListUsers'
+import CreateSafra from './pages/safra/CreateSafra'
+import CreateSafraSimple from './pages/safra/CreateSafraSimple'
+import ListSafras from './pages/safra/ListSafras'
+import Dashboard from './pages/Dashboard'
 
 function App() {
 
   return (
     <>
       <Routes>
+        {/* Redirect root to login */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+
         <Route path="/login" element={<Login/>}/>
 
         <Route element={<ProtectedRoute />}>
           <Route path="/application" element={<AppLayout/>}>
-            <Route path="home" element={<h1>Home</h1>}/>
+            {/* Redirect /application to /application/home */}
+            <Route index element={<Navigate to="home" replace />} />
+            <Route path="home" element={<Dashboard/>}/>
             <Route path="user" element={<UserRegister/>}/>
             <Route path="users" element={<UserList/>}/>
+            <Route path="safras" element={<ListSafras/>}/>
+            <Route path="safra/criar" element={<CreateSafra/>}/>
+            <Route path="atividades" element={<h1>Atividades</h1>}/>
+            <Route path="custos" element={<h1>Custos</h1>}/>
+            <Route path="estoque" element={<h1>Estoque</h1>}/>
             <Route path="reports" element={<h1>Reports</h1>}/>
           </Route>
         </Route>
 
-        
+        {/* Catch all - redirect to login */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </>
   )
