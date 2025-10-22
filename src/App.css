@@ -1,0 +1,28 @@
+/* src/App.css */
+
+/* Aplica o reset e regras de layout no corpo da página */
+html, body, #root {
+    /* Zera margens e paddings padrão do navegador */
+    margin: 0;
+    padding: 0;
+    
+    /* Garante que ocupem 100% da largura visível */
+    width: 100%;
+    
+    /* Impede que o conteúdo vaze e cause rolagem horizontal (CRÍTICO) */
+    overflow-x: hidden; 
+    
+    /* Garante que o container principal tenha pelo menos a altura da tela */
+    min-height: 100vh;
+    
+    /* Configuração padrão do box-sizing */
+    box-sizing: border-box;
+    
+    /* Opcional: Fonte padrão, se não tiver definido em outro lugar */
+    font-family: 'Arial', sans-serif;
+}
+
+/* Garante que todos os elementos filhos respeitem o box-sizing */
+*, *::before, *::after {
+    box-sizing: inherit;
+}
