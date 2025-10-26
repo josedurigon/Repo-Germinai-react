@@ -13,20 +13,20 @@ import CreateSafra from './pages/safra/CreateSafra'
 import CreateSafraSimple from './pages/safra/CreateSafraSimple'
 import ListSafras from './pages/safra/ListSafras'
 import Dashboard from './pages/Dashboard'
+import Homepage from './pages/auth/Homepage'
 
 function App() {
 
   return (
     <>
       <Routes>
-        {/* Redirect root to login */}
         <Route path="/" element={<Navigate to="/login" replace />} />
 
         <Route path="/login" element={<Login/>}/>
+        <Route path="/homepage" element={<Homepage/>}/>
 
         <Route element={<ProtectedRoute />}>
           <Route path="/application" element={<AppLayout/>}>
-            {/* Redirect /application to /application/home */}
             <Route index element={<Navigate to="home" replace />} />
             <Route path="home" element={<Dashboard/>}/>
             <Route path="user" element={<UserRegister/>}/>
@@ -40,7 +40,6 @@ function App() {
           </Route>
         </Route>
 
-        {/* Catch all - redirect to login */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </>
