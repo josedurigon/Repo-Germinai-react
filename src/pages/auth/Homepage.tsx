@@ -1,5 +1,5 @@
-import Header from "../../components/Header";
-import Banner from '../../components/Banner/Banner';
+import Header from "../../components/Header/Header.tsx";
+import Banner from '../../components/Banner/Banner.tsx';
 
 const Homepage = () => {
     return (

@@ -2,12 +2,8 @@
 .bodyBanner {
   background-color: #F5F5DC;
   width: 100%;
-  min-height:100;
-  padding: 5%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
+  min-height:80vh;
+  padding: 100px 40px;
 }
 
 .conteudoBanner {
