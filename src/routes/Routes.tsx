@@ -1,13 +1,14 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import Login from '../pages/auth/Login';
+import Login from '../components/Login/Login';
 import Homepage from '../pages/auth/Homepage';
 import UserRegister from '../pages/user/CreateUser';
 import UserList from '../pages/user/ListUsers';
 import AppLayout from '../layouts/AppLayout';
 import ProtectedRoute from './ProtectedRoute';
 import AboutUs from '../components/AboutUs/AboutUs';
+import ForgotPassword from '../components/Login/ForgotPassword';
 
 
 const AppRoutes: React.FC = () => {
@@ -17,6 +18,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/" element={<Homepage />} />
       <Route path='/sobre-nos' element={<AboutUs />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/esqueci-senha" element={<ForgotPassword />} />
 
       <Route element={<ProtectedRoute />}>
         <Route path="/application" element={<AppLayout />}>
