@@ -1,3 +1,6 @@
+body{
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
 
 .bodyBanner {
   background-color: #F5F5DC;
@@ -33,7 +36,7 @@
   font-size: 1.05em;
   line-height:1.6;
   margin-bottom: 30px;
-  color: #555;
+  color: #A5A5A7;
 }
 
 .botaoCadastrar {
