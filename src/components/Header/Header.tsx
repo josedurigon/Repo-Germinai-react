@@ -3,6 +3,7 @@ import styles from './Header.module.css';
 
 import letreiro from '../../assets/letreiro-home.png'
 import logo from '../../assets/logo-sem-textura.png'
+import { Link } from 'react-router-dom';
 
 
 const Header: React.FC = () => {
@@ -17,20 +18,18 @@ const Header: React.FC = () => {
             <nav>
                 <ul className={styles.navList}>
                     <li className={styles.navItem}>
-                        <a
-                            href="#inicio"
+                        <Link to ="/"
                             className={styles.navLink}
-                        >
+                            >
                             INÍCIO
-                        </a>
+                            </Link>
                     </li>
                     <li className={styles.navItem}>
-                        <a
-                            href="#sobre-nos"
+                            <Link to="/sobre-nos"
                             className={styles.navLink}
                         >
                             SOBRE-NÓS
-                        </a>
+                            </Link>
                     </li>
                 </ul>
             </nav>
