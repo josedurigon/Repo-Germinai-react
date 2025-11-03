@@ -8,6 +8,7 @@ import UserList from '../pages/user/ListUsers';
 import AppLayout from '../layouts/AppLayout';
 import ProtectedRoute from './ProtectedRoute';
 import AboutUs from '../components/AboutUs/AboutUs';
+import PrevisaoPreco from '../pages/gestorInteligente/PrevisaoPreco';
 
 
 const AppRoutes: React.FC = () => {
@@ -17,7 +18,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/" element={<Homepage />} />
       <Route path='/sobre-nos' element={<AboutUs />} />
       <Route path="/login" element={<Login />} />
-
+      <Route path="/previsao-preco" element={<PrevisaoPreco />} />
       <Route element={<ProtectedRoute />}>
         <Route path="/application" element={<AppLayout />}>
           <Route path="home" element={<h1>Home</h1>} />
