@@ -1,0 +1,160 @@
+
+
+/* ====== CONTAINER PRINCIPAL ====== */
+.barra-lateral {
+  flex: 1;
+  width: 100%;
+  height: 100vh;
+  background-color: #112616; /* verde escuro da imagem */
+  color: #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-shrink: 0;        /*Impede que a barra "encolha" */
+  padding: 10px 0;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.15);
+  font-family: "Inter", sans-serif;
+  overflow: hidden; /* 🔹 evita scroll dentro da barra */
+}
+
+/* ====== CABEÇALHO (LOGO) ====== */
+.cabecalho-barra {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height:2.5%;
+  margin-top: 1%;
+  margin-bottom: 3px;
+}
+
+.cabecalho-barra h2 {
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* ====== BOTÕES DE NAVEGAÇÃO ====== */
+.navegacao-barra {
+  flex-grow: 1;
+  margin-top: 4%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 12px;
+}
+
+.botao-navegacao {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  color: #cdd5c7;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 10px 12px;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+  text-align: left;
+}
+
+.botao-navegacao:hover {
+  background-color: #244428;
+  color: #ffffff;
+}
+
+.botao-navegacao.ativo {
+  background-color: #2e5434;
+  color: #ffffff;
+}
+
+/* ====== ÍCONES ====== */
+.icone-botao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icone {
+  font-size: 1.25rem;
+}
+
+/* ====== CONTADOR ====== */
+.contador-botao {
+  background-color: #4ade80;
+  color: #0f172a;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 12px;
+  margin-left: auto;
+}
+
+/* ====== DIVISOR ====== */
+.divisor-barra {
+  border-top: 1px solid #2b3a2e;
+  margin: 12px 0;
+}
+
+/* ====== RODAPÉ ====== */
+.rodape-barra {
+  padding: 12px;
+  border-top: 1px solid #2b3a2e;
+  overflow: hidden;
+}
+
+/* ====== PERFIL DO USUÁRIO ====== */
+.perfil-usuario {
+  display: flex;
+  align-items: center;
+  background-color: #C1CDC3;
+  border-radius: 12px;
+  height: 40%;
+  padding: 10px;
+  margin-top: 12px;
+  transition: background-color 0.3s ease;   
+  overflow: hidden;
+}
+
+.perfil-usuario:hover {
+  background-color: #36643d;
+}
+
+.avatar-usuario {
+  background-color: #4ade80;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.icone-usuario {
+  font-size: 1.2rem;
+  color: #0f172a;
+}
+
+.info-usuario {
+  display: flex;
+  flex-direction: column; /* 🔹 empilha o nome e o email */
+  align-items: flex-start; /* 🔹 alinha à esquerda */
+  justify-content: center;
+  text-align: left;
+  line-height: 1.2; /* 🔹 reduz espaço entre linhas */
+  overflow: hidden;
+}
+
+
+.nome-usuario {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #2b3a2e;
+  height: 0.5px;
+}
+
+.email-usuario {
+  font-size: 0.75rem;
+  color: #2b3a2e;
+}
