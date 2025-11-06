@@ -1,3 +1,5 @@
+import './App.css';
+import AppRoutes from './routes/Routes'; 
 import { useState } from 'react'
 import { Route, Routes, Link } from 'react-router-dom'
 
@@ -11,9 +13,10 @@ import UserRegister from './pages/user/CreateUser'
 import UserList from './pages/user/ListUsers'
 import PrevisaoPreco from './pages/gestorInteligente/PrevisaoPreco'
 
-function App() {
 
+function App() {
   return (
+    <AppRoutes /> 
     <>
       <Routes>
         <Route path="/login" element={<Login/>}/>

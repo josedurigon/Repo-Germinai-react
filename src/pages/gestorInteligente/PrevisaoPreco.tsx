@@ -1,6 +1,9 @@
 import React from 'react';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+const PrevisaoPreco = () => {
+  return <div>Previsão de Preço Page</div>;
 import Sidebar from '../../components/Navegation/Sidebar';
 import NavigationGerminai from '../../components/Navegation/NavegationGermini';
 import './PrevisaoPreco.css';
