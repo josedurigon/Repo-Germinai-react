@@ -1,7 +1,5 @@
-<<<<<<< Updated upstream
 import './App.css';
 import AppRoutes from './routes/Routes'; 
-=======
 import { useState } from 'react'
 import { Route, Routes, Link } from 'react-router-dom'
 
@@ -14,13 +12,11 @@ import ProtectedRoute from './routes/ProtectedRoute'
 import UserRegister from './pages/user/CreateUser'
 import UserList from './pages/user/ListUsers'
 import PrevisaoPreco from './pages/gestorInteligente/PrevisaoPreco'
->>>>>>> Stashed changes
+
 
 function App() {
   return (
-<<<<<<< Updated upstream
     <AppRoutes /> 
-=======
     <>
       <Routes>
         <Route path="/login" element={<Login/>}/>
@@ -38,7 +34,6 @@ function App() {
         
       </Routes>
     </>
->>>>>>> Stashed changes
   )
 }
 
