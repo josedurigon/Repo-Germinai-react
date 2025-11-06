@@ -1,0 +1,22 @@
+.pagina-previsao-container-pai {
+    margin: 0;
+    padding: 0;
+    background-color: #F7F5E0;
+    overflow: hidden; /* impede scroll na tela */
+    display: grid; 
+    grid-template-columns: 19%  1fr; 
+    height: 100vh;
+  
+}
+
+.conteudo-previsao {
+    display: grid;
+    grid-template-rows: 5.5%  1fr; 
+    overflow: hidden; 
+}
+
+.conteudo-principal-wrapper {
+    overflow-y: auto; 
+    padding: 20px; 
+ 
+}

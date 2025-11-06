@@ -9,6 +9,7 @@ import AppLayout from './layouts/AppLayout'
 import ProtectedRoute from './routes/ProtectedRoute'
 import UserRegister from './pages/user/CreateUser'
 import UserList from './pages/user/ListUsers'
+import PrevisaoPreco from './pages/gestorInteligente/PrevisaoPreco'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
     <>
       <Routes>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/previsao-preco" element={<PrevisaoPreco/>}/>
 
         <Route element={<ProtectedRoute />}>
           <Route path="/application" element={<AppLayout/>}>
