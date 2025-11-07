@@ -1,36 +1,24 @@
 import { Outlet } from "react-router-dom";
-import SidebarMenu from "../../src/components/SideBarMenu";
-import { useState } from "react";
-import "../../src/styles/layouts/AppLayout.css";
+import Sidebar from "../components/Navegation/Sidebar";
+import Navigation from "../components/Navegation/NavegationGermini";
+import "./AppLayout.css";
 
-const AppLayout: React.FC = () => {
-
-    const [collapsed, setCollapsed] = useState(false);
-
-    return (
-    <div id="app-root">
-      {/* Sidebar */}
-      <aside className={`sidebar ${collapsed ? "collapsed" : ""}`}>
-        <div className="sidebar-header">GERMINAI</div>
-        <SidebarMenu />
-        <button
-          className={`sidebar-toggle ${collapsed ? "collapsed" : ""}`}
-          onClick={() => setCollapsed(!collapsed)}
-        >
-          {collapsed ? "→" : "←"}
-        </button>
+export default function AppLayout() {
+  return (
+    <div className="app-layout">
+      <aside className="sidebar">
+        <Sidebar />
       </aside>
 
-      {/* Conteúdo */}
-      <main className={`content ${collapsed ? "expanded" : ""}`}>
-        <header className="topbar">Área Logada</header>
-        <div className="page-content">
+      <div className="main-content">
+        <header className="navigation">
+          <Navigation />
+        </header>
+
+        <main className="page-content">
           <Outlet />
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
-
-};
-
-export default AppLayout;
+}
