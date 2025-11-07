@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
 import {
@@ -62,60 +63,79 @@ const PerfilUsuario: React.FC = () => (
 // Componente principal da barra lateral
 const BarraLateral: React.FC = () => {
   const [linkAtivo, setLinkAtivo] = useState<string>("Gestor Inteligente IA");
+  const navigate = useNavigate();
 
   return (
     <> 
-     
     <aside className="barra-lateral">
       <div className="cabecalho-barra">
         <h2>GERMINAI</h2>
       </div>
     
-
       <nav className="navegacao-barra">
         <BotaoNavegacao
           icone={HiOutlineHome}
           texto="Início"
           ativo={linkAtivo === "Início"}
-          aoClicar={() => setLinkAtivo("Início")}
+          aoClicar={() => {
+            setLinkAtivo("Início");
+            navigate("/application/Inicio");
+          }}
         />
         <BotaoNavegacao
           icone={HiOutlinePencil}
           texto="Cadastro"
           ativo={linkAtivo === "Cadastro"}
-          aoClicar={() => setLinkAtivo("Cadastro")}
+          aoClicar={() => {
+            setLinkAtivo("Cadastro");
+            navigate("/application/Cadastro");
+          }}
         />
         <BotaoNavegacao
           icone={HiOutlineCalendar}
           texto="Atividades"
           ativo={linkAtivo === "Atividades"}
-          aoClicar={() => setLinkAtivo("Atividades")}
+          aoClicar={() => {
+            setLinkAtivo("Atividades");
+            navigate("/application/atividades");
+          }}
         />
         <BotaoNavegacao
           icone={HiOutlineDocumentText}
           texto="Gestão de safras"
           ativo={linkAtivo === "Gestão de safras"}
-          aoClicar={() => setLinkAtivo("Gestão de safras")}
+          aoClicar={() => {
+            setLinkAtivo("Gestão de safras");
+            navigate("/application/gestao-safras");
+          }}
         />
         <BotaoNavegacao
           icone={HiOutlineCurrencyDollar}
           texto="Custos"
           ativo={linkAtivo === "Custos"}
-          aoClicar={() => setLinkAtivo("Custos")}
+          aoClicar={() => {
+            setLinkAtivo("Custos");
+            navigate("/application/custos");
+          }}
         />
         <BotaoNavegacao
           icone={HiOutlineArchiveBox}
           texto="Estoque"
           ativo={linkAtivo === "Estoque"}
-          aoClicar={() => setLinkAtivo("Estoque")}
+          aoClicar={() => {
+            setLinkAtivo("Estoque");
+            navigate("/application/estoque");
+          }}
         />
         <BotaoNavegacao
           icone={HiOutlineCpuChip}
           texto="Gestor Inteligente IA"
           ativo={linkAtivo === "Gestor Inteligente IA"}
-          aoClicar={() => setLinkAtivo("Gestor Inteligente IA")}
+          aoClicar={() => {
+            setLinkAtivo("Gestor Inteligente IA");
+            navigate("/application/Previsao-preco");
+          }}
         />
-
       </nav>
 
       <div className="rodape-barra">
@@ -125,7 +145,10 @@ const BarraLateral: React.FC = () => {
             texto="Notificações"
             contador={10}
             ativo={linkAtivo === "Notificações"}
-            aoClicar={() => setLinkAtivo("Notificações")}
+            aoClicar={() => {
+              setLinkAtivo("Notificações");
+              navigate("/application/notificacoes");
+            }}
           />
           <BotaoNavegacao
             icone={HiOutlineArrowLeftOnRectangle}
@@ -139,5 +162,6 @@ const BarraLateral: React.FC = () => {
     </>
   );
 };
+
 
 export default BarraLateral;
