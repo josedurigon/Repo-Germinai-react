@@ -16,8 +16,8 @@ import PrevisaoPreco from './pages/gestorInteligente/PrevisaoPreco'
 
 function App() {
   return (
-    <AppRoutes /> 
-    <>
+
+        <>
       <Routes>
         <Route path="/login" element={<Login/>}/>
         <Route path="/previsao-preco" element={<PrevisaoPreco/>}/>
@@ -31,7 +31,6 @@ function App() {
           </Route>
         </Route>
 
-        
       </Routes>
     </>
   )
