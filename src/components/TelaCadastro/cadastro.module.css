@@ -47,6 +47,7 @@
     font-size: 1.2em;
 }
 
+
 .cardLogin {
     background-color: white;
     border-radius: 12px;
@@ -105,18 +106,14 @@
     width: 100%;
 }
 
-.campoInput {
-    width: 100%;
-}
-
 .campoInput :global(.p-inputtext),
-.campoInput :global(.p-password input) {
-    width: 100%;
+.campoInput :global(.p-password) {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 6px;
-    box-sizing: border-box;
+    width: 100%;
 }
+
 
 .opcoesAdicionais {
     display: flex;
@@ -142,9 +139,8 @@
 .mensagemErro {
     color: #d32f2f;
     font-size: 0.85em;
-    margin-top: 4px;
-    margin-bottom: 8px;
-    text-align: left;
+    text-align: center;
+    margin-top: -10px;
 }
 
 .botaoEntrar {
@@ -201,11 +197,13 @@
         overflow: visible !important;
     }
 
+
     .formularioCadastro {
         display: flex;
         flex-direction: column;
         gap: 15px;
         margin-top: -20px;
+
     }
 
     .linhaCampos {
@@ -239,4 +237,15 @@
             gap: 15px;
         }
     }
+
+
+}
+
+.campo .mensagemErro,
+.campoMetade .mensagemErro {
+    text-align: left;
+    margin-top: 3px;
+    margin-left: 2px;
+    width: 100%;
+    display: block;
 }

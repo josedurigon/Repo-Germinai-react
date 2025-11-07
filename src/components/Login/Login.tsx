@@ -16,20 +16,45 @@ const Login: React.FC = () => {
     const [remember, setRemember] = useState(true);
     const [loading, setLoading] = useState(false);
     const [err, setErr] = useState<string | null>(null);
+
+    const [fieldErrors, setFieldErrors] = useState({
+        email: "",
+        password: "",
+    });
+
     const navigate = useNavigate();
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         setErr(null);
+
+        let hasError = false;
+        const newFieldErrors = { email: "", password: "" };
+        
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!email.trim()) {
+            newFieldErrors.email = "O campo de e-mail é obrigatório.";
+            hasError = true;
+        } else if (!emailRegex.test(email)) {
+            newFieldErrors.email = "E-mail inválido.";
+            hasError = true;
+        }
+
+        if (!password.trim()) {
+            newFieldErrors.password = "O campo de senha é obrigatório.";
+            hasError = true;
+        }
+
+        setFieldErrors(newFieldErrors);
+        if (hasError) return; 
+
         setLoading(true);
         try {
             const response = await login(email, password);
-
-            // Simulação de delay
             await new Promise(r => setTimeout(r, 600));
             if (remember) localStorage.setItem("rememberEmail", email);
-
-            // Navega para a área logada
             navigate("/application/home", { replace: true });
         } catch (e: any) {
             setErr(e?.response?.data?.message ?? "Falha no login");
@@ -37,42 +62,40 @@ const Login: React.FC = () => {
             setLoading(false);
         }
     }
+
     return (
         <div className={styles.containerTela}>
-
             <div className={styles.colunaImagem} style={{ backgroundImage: `url(${imagemFundo})` }}>
-                <div className={styles.efeitosGraficos}>
-                </div>
+                <div className={styles.efeitosGraficos}></div>
             </div>
 
             <div className={styles.colunaFormulario}>
-
                 <Link to="/" className={styles.botaoSair}>
                     <i className="pi pi-sign-out"></i>
                     <span>Sair</span>
                 </Link>
 
                 <Card className={styles.cardLogin}>
-
                     <div className={styles.cabecalhoCard}>
                         <img src={logo} alt="Logo Germinai" className={styles.logoCard} />
-                        <h1 className={styles.tituloCard}>LOGIN</h1>
+                        <h1 className={styles.tituloCard}>Login</h1>
                         <p className={styles.subtituloCard}>Por favor, insira seus dados para fazer login.</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className={styles.formulario}>
-
                         <div className={styles.campo}>
                             <label htmlFor="email" className={styles.labelCampo}>E-mail</label>
                             <InputText
                                 id="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className={styles.campoInput}
-                                placeholder="Enter your email..."
+                                className={`${styles.campoInput} ${fieldErrors.email ? "p-invalid" : ""}`}
+                                placeholder="exemplo@email.com"
                                 autoComplete="username"
-                                required
                             />
+                            {fieldErrors.email && (
+                                <small className={styles.mensagemErro}>{fieldErrors.email}</small>
+                            )}
                         </div>
 
                         <div className={styles.campo}>
@@ -87,8 +110,10 @@ const Login: React.FC = () => {
                                 toggleMask
                                 placeholder="Password@123"
                                 autoComplete="current-password"
-                                required
                             />
+                            {fieldErrors.password && (
+                                <small className={styles.mensagemErro}>{fieldErrors.password}</small>
+                            )}
                         </div>
 
                         <div className={styles.opcoesAdicionais}>
@@ -120,7 +145,6 @@ const Login: React.FC = () => {
                                 Realizar cadastro
                             </Link>
                         </p>
-
                     </form>
                 </Card>
             </div>
