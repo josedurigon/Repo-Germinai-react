@@ -18,14 +18,16 @@ const AppRoutes: React.FC = () => {
       <Route path="/" element={<Homepage />} />
       <Route path='/sobre-nos' element={<AboutUs />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/previsao-preco" element={<PrevisaoPreco />} />
+  
+
       <Route element={<ProtectedRoute />}>
         <Route path="/application" element={<AppLayout />}>
           <Route path="home" element={<h1>Home</h1>} />
           <Route path="user" element={<UserRegister />} />
           <Route path="users" element={<UserList />} />
           <Route path="reports" element={<h1>Reports</h1>} />
-
+          <Route path="previsao-preco" element={<PrevisaoPreco />} />
+  
         </Route>
       </Route>
 
