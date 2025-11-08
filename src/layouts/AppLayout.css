@@ -1,0 +1,39 @@
+.app-layout {
+  display: grid;
+  grid-template-columns: 19% 1fr; /* Sidebar + Conteúdo */
+  height: 100vh;
+  background-color: #F7F5E0;
+  overflow: hidden;
+}
+
+/* Lado esquerdo */
+.sidebar {
+  background-color: #112616;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Lado direito */
+.main-content {
+  display: grid;
+  grid-template-rows: 5.5% 1fr; /* Navigation em cima, Conteúdo embaixo */
+  height: 100vh;
+  overflow: hidden;
+
+}
+
+/* Topo da direita */
+.navigation {
+  background-color: #244428; /* opcional, só pra visualizar */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Área principal (conteúdo) */
+.page-content {
+  background-color: #F7F5E0;
+  padding: 16px;
+  overflow-y: auto; /* permite rolagem interna se o conteúdo for grande */
+}
