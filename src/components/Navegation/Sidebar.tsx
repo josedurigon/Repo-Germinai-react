@@ -155,7 +155,7 @@ const BarraLateral: React.FC = () => {
             texto="Sair"
             aoClicar={() => {
               // Limpa dados de autenticação
-              localStorage.removeItem("token");
+              localStorage.removeItem("access_token");
               sessionStorage.clear();
               
               navigate("/home", { replace: true });
