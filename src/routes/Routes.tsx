@@ -18,7 +18,7 @@ import GestaoSafras from '../pages/gestaoSafras/GestaoSafras';
 import Custos from '../pages/custos/Custos';
 import Estoque from '../pages/estoque/Estoque';
 import Notificacoes from '../pages/notificacoes/Notificacoes';
-import Inicio from '../pages/inicio/inicio';
+import Inicio from '../pages/inicio/Inicio';
 
 const AppRoutes: React.FC = () => {
   return (
