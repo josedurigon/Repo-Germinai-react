@@ -60,11 +60,11 @@ const PerfilUsuario: React.FC = () => (
   </div>
 );
 
+
 // Componente principal da barra lateral
 const BarraLateral: React.FC = () => {
   const [linkAtivo, setLinkAtivo] = useState<string>("Gestor Inteligente IA");
   const navigate = useNavigate();
-
   return (
     <> 
     <aside className="barra-lateral">
@@ -153,7 +153,13 @@ const BarraLateral: React.FC = () => {
           <BotaoNavegacao
             icone={HiOutlineArrowLeftOnRectangle}
             texto="Sair"
-            aoClicar={() => alert("Saindo...")}
+            aoClicar={() => {
+              // Limpa dados de autenticação
+              localStorage.removeItem("token");
+              sessionStorage.clear();
+              
+              navigate("/home", { replace: true });
+          }}
           />
         </nav>
         <PerfilUsuario />

@@ -1,8 +1,23 @@
 import React from 'react';
+import BoxShadowPadrao from '../../components/box-shadow/BoxShadowPadrao';
 
+const Custos = () => {
+  return (
+   <div className="pagina-container-pai"> 
+   
+      <main className="conteudo-previsao">
 
-const Custos: React.FC = () => {
-  return <h1>Custos</h1>;
-};
+          <h1>custo</h1>
+          
+          <BoxShadowPadrao>
+         
+            <h2>Cálculo de Previsão</h2>
+          </BoxShadowPadrao>
+   
+      </main>
 
+    </div>
+  )
+    
+}
 export default Custos;

@@ -1,7 +1,25 @@
 import React from 'react';
 
-const Cadastro: React.FC = () => {
-  return <h1>Cadastro</h1>;
-};
+import BoxShadowPadrao from '../../components/box-shadow/BoxShadowPadrao';
+
+const Cadastro = () => {
+  return (
+   <div className="pagina-container-pai"> 
+   
+      <main className="conteudo-previsao">
+
+          <h1>cadastro</h1>
+          
+          <BoxShadowPadrao>
+         
+            <h2>Cálculo de Previsão</h2>
+          </BoxShadowPadrao>
+   
+      </main>
+
+    </div>
+  )
+    
+}
 
 export default Cadastro;
