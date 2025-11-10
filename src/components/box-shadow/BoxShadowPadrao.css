@@ -1,0 +1,12 @@
+.BoxShadowPadrao {
+   box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+              rgba(17, 17, 26, 0.05) 0px 8px 32px;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  padding: 16px;
+  width: 78vw;
+  box-sizing: border-box;
+  height: 79vh; /* deixa o conteúdo crescer naturalmente */
+  overflow-y: auto;
+  margin-left: 2%;
+}
