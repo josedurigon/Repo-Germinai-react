@@ -4,7 +4,14 @@
   height: 100vh;
   background-color: #F7F5E0;
   overflow: hidden;
+    justify-content: center;
+  align-items: flex-start;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden; /* evita scroll global */
+
 }
+
 
 /* Lado esquerdo */
 .sidebar {
@@ -19,7 +26,7 @@
   display: grid;
   grid-template-rows: 5.5% 1fr; /* Navigation em cima, Conteúdo embaixo */
   height: 100vh;
-  overflow: hidden;
+
 
 }
 
@@ -34,6 +41,6 @@
 /* Área principal (conteúdo) */
 .page-content {
   background-color: #F7F5E0;
-  padding: 16px;
+
   overflow-y: auto; /* permite rolagem interna se o conteúdo for grande */
 }
