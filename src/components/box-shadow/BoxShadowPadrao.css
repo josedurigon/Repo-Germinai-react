@@ -6,7 +6,7 @@
   padding: 16px;
   width: 78vw;
   box-sizing: border-box;
-  height: 84vh; /* deixa o conteúdo crescer naturalmente */
+  height: 82vh; 
   overflow-y: auto;
   margin-left: 2%;
 }

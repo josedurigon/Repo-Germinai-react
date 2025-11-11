@@ -137,11 +137,11 @@
 
 .info-usuario {
   display: flex;
-  flex-direction: column; /* 🔹 empilha o nome e o email */
-  align-items: flex-start; /* 🔹 alinha à esquerda */
+  flex-direction: column; /* empilha o nome e o email */
+  align-items: flex-start; /* alinha à esquerda */
   justify-content: center;
   text-align: left;
-  line-height: 1.2; /* 🔹 reduz espaço entre linhas */
+  line-height: 1.2; /* reduz espaço entre linhas */
   overflow: hidden;
 }
 
