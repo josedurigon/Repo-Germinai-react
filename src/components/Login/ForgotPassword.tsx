@@ -4,7 +4,7 @@ import styles from './Login.module.css';
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-// import { requestPasswordReset } from "../../services/AuthService"; 
+import { requestPasswordReset } from "../../services/AuthService";
 import logo from '../../assets/logo-sem-textura.png';
 import imagemFundo from '../../assets/imagem-fundo-login.jpg';
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './cadastro.module.css';
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
@@ -8,6 +8,7 @@ import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import { Checkbox } from 'primereact/checkbox';
+import { register } from '../../services/AuthService';
 
 import logo from '../../assets/logo-sem-textura.png';
 import imagemFundoCadastro from '../../assets/plantas-soja.jpg';
@@ -28,6 +29,8 @@ const opcoesDiaSemana = [
 ];
 
 const Cadastro: React.FC = () => {
+  const navigate = useNavigate();
+
   const [dadosCadastro, setDadosCadastro] = useState({
     nomeCompleto: '',
     email: '',
@@ -49,7 +52,7 @@ const Cadastro: React.FC = () => {
 
   const handleInputChange = (e: any, name: string, value: any) => {
     setDadosCadastro((prev) => ({ ...prev, [name]: value }));
-    setFieldErrors((prev: any) => ({ ...prev, [name]: '' })); 
+    setFieldErrors((prev: any) => ({ ...prev, [name]: '' }));
   };
 
   const handleObterLocalizacao = () => {
@@ -98,6 +101,8 @@ const Cadastro: React.FC = () => {
 
     if (!dadosCadastro.senha.trim())
       erros.senha = 'O campo Senha é obrigatório.';
+    else if (dadosCadastro.senha.length < 6)
+      erros.senha = 'A senha deve ter no mínimo 6 caracteres.';
 
     if (!dadosCadastro.confirmarSenha.trim())
       erros.confirmarSenha = 'É necessário confirmar a senha.';
@@ -149,10 +154,54 @@ const Cadastro: React.FC = () => {
 
     setLoading(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const userData = {
+        username: dadosCadastro.nomeCompleto.toLowerCase().replace(/\s+/g, ''),
+        email: dadosCadastro.email,
+        password: dadosCadastro.senha,
+        nomeCompleto: dadosCadastro.nomeCompleto,
+        telefone: dadosCadastro.telefone,
+        tipoProdutor: dadosCadastro.tipoProdutor,
+        nomeFazenda: dadosCadastro.nomeFazenda,
+        endereco: dadosCadastro.endereco,
+        tamanhoPropriedade: dadosCadastro.tamanhoPropriedade,
+        inicioSemana: dadosCadastro.inicioSemana,
+      };
+
+      console.log('Enviando dados de cadastro:', userData);
+
+      const response = await register(userData);
+
+      console.log('Cadastro realizado com sucesso:', response);
+
+      alert('Cadastro realizado com sucesso! Faça login para continuar.');
+
+      navigate('/login');
+
     } catch (e: any) {
-      setErr(e?.message ?? 'Falha no cadastro. Verifique os dados.');
+      console.error('Erro no cadastro:', e);
+
+      let errorMessage = 'Falha no cadastro. Tente novamente.';
+
+      if (e.response) {
+        const backendMsg = e.response.data?.message || e.response.data?.error;
+
+        if (
+          e.response.status === 409 ||
+          (backendMsg && (backendMsg.includes('existe') || backendMsg.includes('exists')))
+        ) {
+          errorMessage = 'Este e-mail ou usuário já está cadastrado.';
+        } else if (backendMsg) {
+          errorMessage = backendMsg;
+        } else {
+          errorMessage = 'Erro ao processar o cadastro.';
+        }
+      } else if (e.request) {
+        errorMessage = 'Erro de conexão com o servidor.';
+      }
+
+      setErr(errorMessage);
     } finally {
+
       setLoading(false);
     }
   };
@@ -394,7 +443,7 @@ const Cadastro: React.FC = () => {
                   </div>
                 </div>
 
-                {err && <div className={styles.mensagemErro}>{err}</div>}
+                {err && <div className={styles.mensagemErro} style={{ marginTop: '1rem' }}>{err}</div>}
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
                   <Button

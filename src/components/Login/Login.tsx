@@ -30,7 +30,6 @@ const Login: React.FC = () => {
 
         let hasError = false;
         const newFieldErrors = { email: "", password: "" };
-        
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -48,16 +47,36 @@ const Login: React.FC = () => {
         }
 
         setFieldErrors(newFieldErrors);
-        if (hasError) return; 
+        if (hasError) return;
 
         setLoading(true);
         try {
-            const response = await login(email, password);
-            await new Promise(r => setTimeout(r, 600));
-            if (remember) localStorage.setItem("rememberEmail", email);
-            navigate("/application/home", { replace: true });
+            const token = await login(email, password);
+
+            console.log('Login bem-sucedido! Token:', token);
+
+            if (remember) {
+                localStorage.setItem("rememberEmail", email);
+            } else {
+                localStorage.removeItem("rememberEmail");
+            }
+
+            navigate("/application/Inicio", { replace: true });
+
         } catch (e: any) {
-            setErr(e?.response?.data?.message ?? "Falha no login");
+            console.error('Erro no login:', e);
+
+            let errorMessage = "Falha no login. Verifique suas credenciais.";
+
+            if (e.message.includes('Usuario nao encontrado')) {
+                errorMessage = "Usuário não encontrado.";
+            } else if (e.message.includes('Credenciais invalidas')) {
+                errorMessage = "Senha incorreta.";
+            } else if (e.message.includes('Failed to fetch')) {
+                errorMessage = "Erro ao conectar com o servidor. Verifique se o backend está rodando.";
+            }
+
+            setErr(errorMessage);
         } finally {
             setLoading(false);
         }

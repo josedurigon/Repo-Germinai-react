@@ -19,6 +19,7 @@ import GestaoSafras from '../pages/gestaoSafras/GestaoSafras';
 import Custos from '../pages/custos/Custos';
 import Estoque from '../pages/estoque/Estoque';
 import Notificacoes from '../pages/notificacoes/Notificacoes';
+import Inicio from '../pages/inicio/Inicio';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -27,6 +28,7 @@ const AppRoutes: React.FC = () => {
       {/* Rotas públicas */}
       <Route path="/" element={<Homepage />} />
       <Route path="home" element={<Homepage />} />
+
       <Route path="/sobre-nos" element={<AboutUs />} />
       <Route path="/login" element={<Login />} />
       <Route path="/cadastro" element={<Cadastro/>}/>
@@ -34,7 +36,10 @@ const AppRoutes: React.FC = () => {
 
       {/* Rotas protegidas */}
       <Route element={<ProtectedRoute />}>
+  
         <Route path="/application" element={<AppLayout />}>
+                    <Route path="Inicio" element={<Inicio />} />
+
           <Route path="user" element={<UserRegister />} />
           <Route path="users" element={<UserList />} />
           <Route path="reports" element={<h1>Reports</h1>} />
