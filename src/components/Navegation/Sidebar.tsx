@@ -111,7 +111,7 @@ const BarraLateral: React.FC = () => {
         />
         <BotaoNavegacao
           icone={HiOutlineCurrencyDollar}
-          texto="Custos"
+          texto="Custos e Gestão Financeira"
           ativo={linkAtivo === "Custos"}
           aoClicar={() => {
             setLinkAtivo("Custos");

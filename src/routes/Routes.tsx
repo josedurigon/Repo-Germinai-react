@@ -15,7 +15,7 @@ import PrevisaoPreco from '../pages/gestorInteligente/PrevisaoPreco';
 import Cadastro from '../pages/cadastro/Cadastro';
 import Atividades from '../pages/atividades/Atividades';
 import GestaoSafras from '../pages/gestaoSafras/GestaoSafras';
-import Custos from '../pages/custos/Custos';
+import Custos from '../pages/gestao-financeira/Gestao-financeira';
 import Estoque from '../pages/estoque/Estoque';
 import Notificacoes from '../pages/notificacoes/Notificacoes';
 import Inicio from '../pages/inicio/Inicio';

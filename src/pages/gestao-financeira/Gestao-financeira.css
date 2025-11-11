@@ -1,0 +1,55 @@
+.pagina-container-pai {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.titulo-pagina-gestao {
+  margin-left: 2%;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  color: #333;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.gestao-financeira {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.titulo-principal {
+  color: #2c3e50;
+  font-size: 1.4rem;
+  margin-bottom: 4px;
+}
+
+.title-card-finan{
+  color: #2c3e50;
+  font-size: 1.4rem;
+  margin-bottom: 4px;
+}
+
+.descricao {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 20px;
+  margin-top: 5%;
+}
+
+
+
+.card-financeiro p {
+  font-size: 0.9rem;
+  color: #444;
+  margin-bottom: 12px;
+}
+
+
