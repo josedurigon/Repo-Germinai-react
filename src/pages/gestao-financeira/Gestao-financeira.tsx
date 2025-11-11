@@ -19,7 +19,7 @@ const Custos = () => {
                   <h3 className='title-card-finan'>Gestão de Pedidos de Compra</h3>
               
                   <p>
-                  Registre, aprove e acompanhe solicitações de compra de insumos e
+                  Registre e acompanhe solicitações de compra de insumos e
                   materiais.
                 </p>
                 <button className="btn-acessar">Gerenciar Pedidos</button>
