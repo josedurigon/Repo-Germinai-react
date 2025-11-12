@@ -24,6 +24,8 @@ body {
 .titulo {
     font-size: 48px;
     font-weight: 500;
+    margin-top: 20px;
+    ;
     margin-bottom: 20px;
     color: #11141B;
 }
@@ -45,18 +47,24 @@ body {
 }
 
 .cardFuncionalidade {
-    flex: 0 0 calc(20% - 16px);
-
+    flex: 1;
+    min-width: 260px;
+    max-width: 300px;
     background-color: #F8F8F8;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    min-height: 350px;
     box-sizing: border-box;
+
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+
+    min-height: auto;
+    height: auto;
+
+    overflow: hidden;
 }
 
 .cardTitulo {
@@ -65,12 +73,22 @@ body {
     margin-top: 15px;
     margin-bottom: 10px;
     color: #325d3f;
-    white-space: nowrap;
+
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
 }
 
 .cardTexto {
     font-size: 0.95em;
     line-height: 1.5;
+
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+
 }
 
 @media (max-width: 1024px) {

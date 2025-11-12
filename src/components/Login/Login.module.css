@@ -1,0 +1,242 @@
+.containerTela {
+    display: flex;
+    min-height: 100vh;
+    background-color: #2D4834;
+    overflow: hidden;
+}
+
+.colunaImagem {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.efeitosGraficos {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.colunaFormulario {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #2D4834;
+    padding: 40px 0;
+}
+
+.botaoSair {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.botaoSair i {
+    font-size: 1.2em;
+}
+
+.cardLogin {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px 35px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.cabecalhoCard {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.logoCard {
+    width: 80px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.tituloCard {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #2D4834;
+    margin-bottom: 5px;
+}
+
+.subtituloCard {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.labelCampo {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #333;
+}
+
+.campoInput {
+    width: 100%;
+}
+
+.campoInput {
+    width: 100%;
+}
+
+.campoInput :global(.p-inputtext),
+.campoInput :global(.p-password input) {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.opcoesAdicionais {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85em;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.lembrarWrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.linkEsqueciSenha {
+    color: #325d3f;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.mensagemErro {
+    color: #d32f2f;
+    font-size: 0.85em;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.botaoEntrar {
+    background-color: #648c41;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1em;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.botaoEntrar:hover {
+    background-color: #52753a;
+}
+
+.linkCadastroWrapper {
+    text-align: center;
+    font-size: 0.85em;
+    margin-top: 15px;
+}
+
+.linkCadastro {
+    color: #325d3f;
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+@media (max-width: 992px) {
+    .colunaImagem {
+        display: none;
+    }
+
+    .colunaFormulario {
+        flex: 100%;
+    }
+
+    .cardLogin {
+        margin: 40px;
+        padding: 30px;
+    }
+
+    .colunaFormulario .cardCadastro {
+        background-color: white !important;
+        border-radius: 12px !important;
+        padding: 30px 50px !important;
+        width: 100% !important;
+        max-width: 400px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+        overflow: visible !important;
+    }
+
+    .formularioCadastro {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: -20px;
+    }
+
+    .linhaCampos {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+    }
+
+    .campoMetade {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .opcaoLocalizacao {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85em;
+        margin-top: 5px;
+    }
+
+    @media (max-width: 768px) {
+        .cardCadastro {
+            max-width: 100%;
+        }
+
+        .linhaCampos {
+            flex-direction: column;
+            gap: 15px;
+        }
+    }
+}
