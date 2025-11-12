@@ -20,6 +20,7 @@ import Custos from '../pages/gestao-financeira/Gestao-financeira';
 import Estoque from '../pages/estoque/Estoque';
 import Notificacoes from '../pages/notificacoes/Notificacoes';
 import Inicio from '../pages/inicio/Inicio';
+import CadastroItensSistema from '../pages/cadastro/CadastroItensSistema';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -43,7 +44,7 @@ const AppRoutes: React.FC = () => {
           <Route path="user" element={<UserRegister />} />
           <Route path="users" element={<UserList />} />
           <Route path="reports" element={<h1>Reports</h1>} />
-          <Route path="cadastro" element={<Cadastro />} />
+          <Route path="Cadastro" element={<CadastroItensSistema />} />
           <Route path="atividades" element={<Atividades />} />
           <Route path="gestao-safras" element={<GestaoSafras />} />
           <Route path="custos" element={<Custos />} />
