@@ -143,8 +143,8 @@ export default function RegistroVendasConteudo() {
         </button>
       </div>
 
-      {/* Mensagem */}
-      {mensagem && (
+      {/* Mensagem (não mostrar aqui mensagens de "nenhuma venda encontrada" para evitar duplicação; essas aparecem abaixo na listagem) */}
+      {mensagem && !mensagem.includes("Nenhuma venda encontrada") && (
         <div className={`mensagem ${mensagem.includes("sucesso") ? "sucesso" : "erro"}`}>
           {mensagem}
         </div>
