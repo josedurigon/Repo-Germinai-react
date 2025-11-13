@@ -2,7 +2,7 @@ import React from 'react';
 
 import BoxShadowPadrao from '../../components/box-shadow/BoxShadowPadrao';
 
-const Cadastro = () => {
+const CadastroItensSistema = () => {
   return (
    <div className="pagina-container-pai"> 
    
@@ -22,4 +22,4 @@ const Cadastro = () => {
     
 }
 
-export default Cadastro;
+export default CadastroItensSistema;

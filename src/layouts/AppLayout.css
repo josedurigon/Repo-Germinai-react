@@ -24,7 +24,7 @@
 /* Lado direito */
 .main-content {
   display: grid;
-  grid-template-rows: 5.5% 1fr; /* Navigation em cima, Conteúdo embaixo */
+  grid-template-rows: 5.5% 1fr; 
   height: 100vh;
 
 
@@ -32,15 +32,15 @@
 
 /* Topo da direita */
 .navigation {
-  background-color: #244428; /* opcional, só pra visualizar */
+  background-color: #244428; 
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-/* Área principal (conteúdo) */
+/* Área principal */
 .page-content {
   background-color: #F7F5E0;
 
-  overflow-y: auto; /* permite rolagem interna se o conteúdo for grande */
+  overflow-y: auto; 
 }
