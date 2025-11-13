@@ -1,0 +1,129 @@
+.container-pedido {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background-color: #fafafa;
+  padding: 24px;
+  border-radius: 8px;
+  max-width: 900px;
+  margin: 40px auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.dados-pedido {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.dados-pedido label {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 30%;
+  font-weight: bold;
+  color: #333;
+}
+
+.dados-pedido input,
+.dados-pedido select {
+  margin-top: 6px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.tabela-container {
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.cabecalho-itens {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.cabecalho-itens h2 {
+  font-size: 18px;
+  color: #333;
+}
+
+.cabecalho-itens button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cabecalho-itens button:hover {
+  background-color: #0056b3;
+}
+
+.tabela-scroll {
+  overflow-x: auto;
+}
+
+.tabela-itens {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela-itens th,
+.tabela-itens td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+.tabela-itens th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.tabela-itens input {
+  width: 90%;
+  padding: 4px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.tabela-itens button {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.tabela-itens button:hover {
+  background-color: #a71d2a;
+}
+
+.total-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.total-valor {
+  color: #007bff;
+  font-size: 18px;
+}

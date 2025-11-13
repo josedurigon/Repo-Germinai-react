@@ -1,10 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import BoxShadowPadrao from '../../components/box-shadow/BoxShadowPadrao';
 import CardFinanceiro from '../../components/CardFinanceiro/CardFinanceiro';
-import { Card } from 'primereact/card';
 import './Gestao-financeira.css';
 
 const Custos = () => {
+  const navigate = useNavigate();
   return (
     <div className="pagina-container-pai">
       <main className="conteudo-previsao">
@@ -22,7 +23,7 @@ const Custos = () => {
                   Registre e acompanhe solicitações de compra de insumos e
                   materiais.
                 </p>
-                <button className="btn-acessar">Gerenciar Pedidos</button>
+                <button className="btn-acessar" onClick={() => navigate('/application/gestao-compras')}>Gerenciar Pedidos</button>
               </CardFinanceiro>
               
 
@@ -32,7 +33,7 @@ const Custos = () => {
                   Registre vendas com detalhes de cliente, produto, valor e status do
                   pagamento.
                 </p>
-                <button className="btn-acessar">Registrar Venda</button>
+                <button className="btn-acessar" onClick={() => navigate('/application/registro-vendas')}>Visualizar Vendas</button>
               </CardFinanceiro>
 
               <CardFinanceiro>
@@ -41,7 +42,7 @@ const Custos = () => {
                   Cadastre e acompanhe suas contas, visualize vencimentos e receba
                   alertas de pagamentos e recebimentos.
                 </p>
-                <button className="btn-acessar">Ver Contas</button>
+                <button className="btn-acessar" onClick={() => navigate('/application/contas-pagar-receber')}>Ver Contas</button>
               </CardFinanceiro>
 
             </div>

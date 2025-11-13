@@ -17,10 +17,13 @@ import PrevisaoPreco from '../pages/gestorInteligente/PrevisaoPreco';
 import Atividades from '../pages/atividades/Atividades';
 import GestaoSafras from '../pages/gestaoSafras/GestaoSafras';
 import Custos from '../pages/gestao-financeira/Gestao-financeira';
+import GestaoCompras from '../pages/Compras/gestaoCompras';
+import RegistroVendas from '../pages/RegistroVendas/RegistroVendas';
 import Estoque from '../pages/estoque/Estoque';
 import Notificacoes from '../pages/notificacoes/Notificacoes';
 import Inicio from '../pages/inicio/Inicio';
 import CadastroItensSistema from '../pages/cadastro/CadastroItensSistema';
+import ContasAPagarReceber from '../pages/ContasAPagarReceber/ContasAPagarReceber';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -48,6 +51,9 @@ const AppRoutes: React.FC = () => {
           <Route path="atividades" element={<Atividades />} />
           <Route path="gestao-safras" element={<GestaoSafras />} />
           <Route path="custos" element={<Custos />} />
+          <Route path="gestao-compras" element={<GestaoCompras />} />
+          <Route path="registro-vendas" element={<RegistroVendas />} />
+          <Route path="contas-pagar-receber" element={<ContasAPagarReceber />} />
           <Route path="estoque" element={<Estoque />} />
          <Route path="previsao-preco" element={<PrevisaoPreco />} />
           <Route path="notificacoes" element={<Notificacoes />} />
