@@ -9,7 +9,7 @@ import UserList from '../pages/user/ListUsers';
 import AppLayout from '../layouts/AppLayout';
 import ProtectedRoute from './ProtectedRoute';
 import AboutUs from '../components/AboutUs/AboutUs';
-import ForgotPassword from '../components/Login/ForgotPassword';
+import ResetPasswordWithCode from '../components/Login/ResetPasswordWithCode';
 import Cadastro from '../components/TelaCadastro/cadastro';
 
 // Páginas específicas
@@ -36,7 +36,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/sobre-nos" element={<AboutUs />} />
       <Route path="/login" element={<Login />} />
       <Route path="/cadastro" element={<Cadastro/>}/>
-      <Route path="/esqueci-senha" element={<ForgotPassword />} />
+      <Route path="/esqueci-senha" element={<ResetPasswordWithCode />} />
 
       {/* Rotas protegidas */}
       <Route element={<ProtectedRoute />}>

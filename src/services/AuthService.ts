@@ -107,6 +107,24 @@ export async function requestPasswordReset(email: string): Promise<void> {
   }
 }
 
+export async function resetPassword(token: string, newPassword: string): Promise<void> {
+  try {
+    await api.post("/auth/reset-password", { token, newPassword });
+  } catch (error: any) {
+    if (error.response?.data) throw new Error(error.response.data);
+    throw error;
+  }
+}
+
+export async function validateResetToken(token: string): Promise<boolean> {
+  try {
+    const { data } = await api.get(`/auth/validate-reset-token?token=${token}`);
+    return data.valid;
+  } catch (error) {
+    return false;
+  }
+}
+
 export default {
   login,
   register,
@@ -115,4 +133,6 @@ export default {
   isAuthenticated,
   listarUsuarios,
   requestPasswordReset,
+  resetPassword,
+  validateResetToken,
 };
