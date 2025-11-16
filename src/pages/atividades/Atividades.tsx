@@ -126,9 +126,22 @@ const Atividades = () => {
       let lista;
       const applied = abaAtiva === 'historico' ? filtrosAplicadosHist : filtrosAplicadosKan;
 
-      // Se tem busca aplicada, usar busca
+      // Se tem busca aplicada, buscar e então aplicar filtros locais (tipo/status/data/cultura)
       if (applied.busca && applied.busca.trim()) {
-        lista = await AtividadeService.buscar(applied.busca);
+        const resultados = await AtividadeService.buscar(applied.busca);
+        lista = resultados.filter(a => {
+          if (applied.tipo && a.tipo !== applied.tipo) return false;
+          if (applied.status && a.status !== applied.status) return false;
+          if (applied.cultura && !(a.cultura || '').toLowerCase().includes(applied.cultura.toLowerCase())) return false;
+          if (applied.dataInicio && applied.dataFim) {
+            const inicio = new Date(applied.dataInicio);
+            const fim = new Date(applied.dataFim);
+            const d = new Date(a.data);
+            if (isNaN(d.getTime())) return false;
+            if (d < inicio || d > fim) return false;
+          }
+          return true;
+        });
       } else {
         const tipo = applied.tipo || undefined;
         const status = applied.status || undefined;
@@ -181,6 +194,17 @@ const Atividades = () => {
         return;
       }
 
+      // Validação adicional: dataVencimento não deve ser anterior à data da atividade
+      if (novaAtividadeDataVencimento) {
+        const dData = new Date(novaAtividadeData);
+        const dVenc = new Date(novaAtividadeDataVencimento);
+        if (!isNaN(dData.getTime()) && !isNaN(dVenc.getTime()) && dVenc < dData) {
+          setErroCamposModal(['dataVencimento']);
+          setMensagem('Data de vencimento não pode ser anterior à data da atividade.');
+          return;
+        }
+      }
+
       // Criar atividade ou editar
       let descricaoFinal = novaAtividadeDescricao.trim();
       if (novaAtividadeTipo === 'outro' && novaAtividadeTipoOutro.trim()) {
@@ -204,7 +228,7 @@ const Atividades = () => {
         setMensagem('Atividade atualizada com sucesso!');
       } else {
         // Criar atividade
-        await AtividadeService.criarAtividade({
+        const criado = await AtividadeService.criarAtividade({
           titulo: novaAtividadeTitulo.trim(),
           descricao: descricaoFinal || undefined,
           tipo: novaAtividadeTipo,
@@ -216,7 +240,7 @@ const Atividades = () => {
           responsavel: novaAtividadeResponsavel.trim() || undefined,
           notas: novaAtividadeNotas.trim() || undefined,
         });
-        setMensagem('Atividade criada com sucesso!');
+        setMensagem(`Atividade criada com sucesso! Código: ${criado.codigoIdentificacao}`);
       }
 
       // Limpar formulário
@@ -225,8 +249,10 @@ const Atividades = () => {
       setNovaAtividadeTipo('plantio');
       setNovaAtividadeTipoOutro('');
       setNovaAtividadeStatus('planejada');
-      setNovaAtividadeData(new Date().toISOString().split('T')[0]);
-  setNovaAtividadeDataVencimento('');
+        setNovaAtividadeData(new Date().toISOString().split('T')[0]);
+        setNovaAtividadeDataVencimento('');
+        // limpar código local da modal (serviço gera o código definitivo)
+        setNovaAtividadeCodigoIdentificacao('');
       setNovaAtividadeCultura('');
       setNovaAtividadeCusto(0);
       setNovaAtividadeResponsavel('');
@@ -267,25 +293,18 @@ const Atividades = () => {
   };
 
   const abrirModalNovaAtividade = () => {
-    // Gerar código de identificação
-    const hoje = new Date();
-    const ano = hoje.getFullYear();
-    const mes = String(hoje.getMonth() + 1).padStart(2, '0');
-    const dia = String(hoje.getDate()).padStart(2, '0');
-    const numero = String(Math.floor(Math.random() * 100000)).padStart(5, '0');
-    const codigo = `AT-${ano}${mes}${dia}-${numero}`;
-    
+    // o serviço atribui o código definitivo ao criar
     setModoEdicao(false);
     setAtividadeEmEdicao(null);
-    setNovaAtividadeCodigoIdentificacao(codigo);
+    setNovaAtividadeCodigoIdentificacao('');
     setNovaAtividadeTitulo('');
     setNovaAtividadeDescricao('');
     setNovaAtividadeTipo('plantio');
     setNovaAtividadeTipoOutro('');
     setNovaAtividadeStatus('planejada');
-  const hojeStr = new Date().toISOString().split('T')[0];
-  setNovaAtividadeData(hojeStr);
-  setNovaAtividadeDataVencimento('');
+    const hojeStr = new Date().toISOString().split('T')[0];
+    setNovaAtividadeData(hojeStr);
+    setNovaAtividadeDataVencimento('');
     setNovaAtividadeCultura('');
     setNovaAtividadeCusto(0);
     setNovaAtividadeResponsavel('');
@@ -311,12 +330,11 @@ const Atividades = () => {
     setModalAberto(true);
   };
 
-  const formatarData = (d: string) => {
-    try {
-      return new Date(d).toLocaleDateString('pt-BR');
-    } catch {
-      return d;
-    }
+  const formatarData = (d?: string) => {
+    if (!d) return '-';
+    const dt = new Date(d);
+    if (isNaN(dt.getTime())) return '-';
+    return dt.toLocaleDateString('pt-BR');
   };
 
   const getCorStatus = (status: StatusAtividade) => {
@@ -789,5 +807,6 @@ const Atividades = () => {
     </div>
   );
 };
+
 
 export default Atividades;
