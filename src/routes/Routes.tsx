@@ -11,7 +11,7 @@ import ResetPasswordWithCode from '../components/Login/ResetPasswordWithCode';
 import Cadastro from '../components/TelaCadastro/cadastro';
 import PrevisaoPreco from '../pages/gestorInteligente/PrevisaoPreco';
 import Atividades from '../pages/atividades/Atividades';
-import GestaoSafras from '../components/GestaoSafra/GestaoSafras'; // ← CORRIJA AQUI
+import GestaoSafras from '../components/GestaoSafra/GestaoSafras'; 
 import Custos from '../pages/gestao-financeira/Gestao-financeira';
 import RegistroVendas from '../pages/RegistroVendas/RegistroVendas';
 import CadastroItensSistema from '../pages/cadastro/CadastroItensSistema';
@@ -28,7 +28,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/sobre-nos" element={<AboutUs />} />
       <Route path="/login" element={<Login />} />
       <Route path="/cadastro" element={<Cadastro />} />
-      <Route path="/esqueci-senha" element={<ResetPasswordWithCode />} /> {/* ← CORRIJA AQUI */}
+      <Route path="/esqueci-senha" element={<ResetPasswordWithCode />} /> 
       
       <Route element={<ProtectedRoute />}>
         <Route path="/application" element={<AppLayout />}>
