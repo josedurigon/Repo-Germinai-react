@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Calendar, TrendingUp, Package, AlertTriangle, Plus, Filter, X, Save } from 'lucide-react';
 
@@ -15,53 +15,283 @@ interface Safra {
   icon: string;
 }
 
+interface CustoMensal {
+  mes: string;
+  sementes: number;
+  adubos: number;
+  custos: number;
+}
+
+interface ReceitaMensal {
+  mes: string;
+  receita: number;
+  previsto: number;
+}
+
+interface Estoque {
+  name: string;
+  value: number;
+  total: number;
+  color: string;
+  [key: string]: string | number;
+}
+
+interface Atividade {
+  id: number;
+  tipo: string;
+  cultura: string;
+  data: string;
+  status: string;
+  insumos: string;
+  area: string;
+}
+
 const GestaoSafras = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [showNewActivityModal, setShowNewActivityModal] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
+  
+  // Estados para dados da API
+  const [safras, setSafras] = useState<Safra[]>([]);
+  const [dadosCustos, setDadosCustos] = useState<CustoMensal[]>([]);
+  const [dadosReceita, setDadosReceita] = useState<ReceitaMensal[]>([]);
+  const [estoqueData, setEstoqueData] = useState<Estoque[]>([]);
+  const [atividades, setAtividades] = useState<Atividade[]>([]);
+  
+  const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     tipo: '',
     status: '',
     cultura: ''
   });
 
-  const safras: Safra[] = [
-    { id: 1, cultura: 'Milho', area: 2, fase: 'Crescimento', diasColheita: 45, status: 'bom', progresso: 65, icon: '🌽' },
-    { id: 2, cultura: 'Soja', area: 112, fase: 'Crescimento', diasColheita: 78, status: 'alerta', progresso: 45, icon: '🌱' },
-    { id: 3, cultura: 'Café', area: 5, fase: 'Floração', diasColheita: 120, status: 'bom', progresso: 35, icon: '☕' }
-  ];
-
-  const dadosCustos = [
-    { mes: 'Jan', sementes: 5000, adubos: 8000, custos: 3000 },
-    { mes: 'Fev', sementes: 6000, adubos: 9000, custos: 3500 },
-    { mes: 'Mar', sementes: 7000, adubos: 10000, custos: 4200 },
-    { mes: 'Abr', sementes: 5500, adubos: 8500, custos: 3800 }
-  ];
-
-  const dadosReceita = [
-    { mes: 'Jan', receita: 15000, previsto: 14000 },
-    { mes: 'Fev', receita: 18000, previsto: 17000 },
-    { mes: 'Mar', receita: 21000, previsto: 20000 },
-    { mes: 'Abr', receita: 19000, previsto: 21000 }
-  ];
-
-  const estoqueData = [
-    { name: 'Fossante', value: 50, total: 120, color: '#f59e0b' },
-    { name: 'Sobas', value: 50, total: 120, color: '#eab308' },
-    { name: 'Defensivos', value: 120, total: 200, color: '#84cc16' },
-    { name: 'Mão de obra', value: 0, total: 100, color: '#fb923c' }
-  ];
-
-  const atividades = [
-    { id: 1, tipo: 'Plantio', cultura: 'Milho', data: '2025-01-15', status: 'Concluída', insumos: 'Sementes: 50kg', area: '2ha' },
-    { id: 2, tipo: 'Irrigação', cultura: 'Soja', data: '2025-02-20', status: 'Concluída', insumos: 'Água: 5000L', area: '112ha' },
-    { id: 3, tipo: 'Adubação', cultura: 'Café', data: '2025-03-10', status: 'Pendente', insumos: 'NPK: 200kg', area: '5ha' },
-    { id: 4, tipo: 'Aplicação', cultura: 'Soja', data: '2025-03-25', status: 'Concluída', insumos: 'Defensivo: 30L', area: '112ha' }
-  ];
-
   const [newActivity, setNewActivity] = useState({
     tipo: '', cultura: '', data: '', descricao: '', insumos: '', quantidade: '', area: ''
   });
+
+  //conectar as apis
+
+  // API 1: Buscar Safras do Usuário
+  useEffect(() => {
+    const fetchSafras = async () => {
+      try {
+        setLoading(true);
+        
+        // back: Substituir pela URL real
+        // Endpoint: GET /api/safras
+        // Resposta esperada: Array de objetos Safra
+        const response = await fetch('/api/safras', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          setSafras(data);
+        } else {
+          setSafras([
+            { id: 1, cultura: 'Milho', area: 2, fase: 'Crescimento', diasColheita: 45, status: 'bom', progresso: 65, icon: '🌽' },
+            { id: 2, cultura: 'Soja', area: 112, fase: 'Crescimento', diasColheita: 78, status: 'alerta', progresso: 45, icon: '🌱' },
+            { id: 3, cultura: 'Café', area: 5, fase: 'Floração', diasColheita: 120, status: 'bom', progresso: 35, icon: '☕' }
+          ]);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar safras:', error);
+        setSafras([
+          { id: 1, cultura: 'Milho', area: 2, fase: 'Crescimento', diasColheita: 45, status: 'bom', progresso: 65, icon: '🌽' },
+          { id: 2, cultura: 'Soja', area: 112, fase: 'Crescimento', diasColheita: 78, status: 'alerta', progresso: 45, icon: '🌱' }
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSafras();
+  }, []);
+
+  // API 2: Buscar Custos Mensais
+  useEffect(() => {
+    const fetchCustos = async () => {
+      try {
+        // back: Substituir pela URL real
+        // Endpoint: GET /api/custos/mensais
+        // Resposta esperada: Array de { mes, sementes, adubos, custos }
+        const response = await fetch('/api/custos/mensais', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          setDadosCustos(data);
+        } else {
+          setDadosCustos([
+            { mes: 'Jan', sementes: 5000, adubos: 8000, custos: 3000 },
+            { mes: 'Fev', sementes: 6000, adubos: 9000, custos: 3500 },
+            { mes: 'Mar', sementes: 7000, adubos: 10000, custos: 4200 },
+            { mes: 'Abr', sementes: 5500, adubos: 8500, custos: 3800 }
+          ]);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar custos:', error);
+        setDadosCustos([
+          { mes: 'Jan', sementes: 5000, adubos: 8000, custos: 3000 },
+          { mes: 'Fev', sementes: 6000, adubos: 9000, custos: 3500 }
+        ]);
+      }
+    };
+
+    fetchCustos();
+  }, []);
+
+  //API 3: Buscar Receitas Mensais
+  useEffect(() => {
+    const fetchReceitas = async () => {
+      try {
+        // back: Substituir pela URL real
+        // Endpoint: GET /api/receitas/mensais
+        // Resposta esperada: Array de { mes, receita, previsto }
+        const response = await fetch('/api/receitas/mensais', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          setDadosReceita(data);
+        } else {
+          setDadosReceita([
+            { mes: 'Jan', receita: 15000, previsto: 14000 },
+            { mes: 'Fev', receita: 18000, previsto: 17000 },
+            { mes: 'Mar', receita: 21000, previsto: 20000 },
+            { mes: 'Abr', receita: 19000, previsto: 21000 }
+          ]);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar receitas:', error);
+        setDadosReceita([
+          { mes: 'Jan', receita: 15000, previsto: 14000 },
+          { mes: 'Fev', receita: 18000, previsto: 17000 }
+        ]);
+      }
+    };
+
+    fetchReceitas();
+  }, []);
+
+  // API 4: Buscar Estoque de Insumos
+  useEffect(() => {
+    const fetchEstoque = async () => {
+      try {
+        // back: Substituir pela URL real
+        // Endpoint: GET /api/estoque/insumos
+        // Resposta esperada: Array de { name, value, total, color }
+        const response = await fetch('/api/estoque/insumos', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          setEstoqueData(data);
+        } else {
+          setEstoqueData([
+            { name: 'Fossante', value: 50, total: 120, color: '#f59e0b' },
+            { name: 'Sobas', value: 50, total: 120, color: '#eab308' },
+            { name: 'Defensivos', value: 120, total: 200, color: '#84cc16' },
+            { name: 'Mão de obra', value: 0, total: 100, color: '#fb923c' }
+          ]);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar estoque:', error);
+        setEstoqueData([
+          { name: 'Fossante', value: 50, total: 120, color: '#f59e0b' },
+          { name: 'Sobas', value: 50, total: 120, color: '#eab308' }
+        ]);
+      }
+    };
+
+    fetchEstoque();
+  }, []);
+
+  // API 5: Buscar Atividades
+  useEffect(() => {
+    const fetchAtividades = async () => {
+      try {
+        // back: Substituir pela URL real
+        // Endpoint: GET /api/atividades
+        // Resposta esperada: Array de { id, tipo, cultura, data, status, insumos, area }
+        const response = await fetch('/api/atividades', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          setAtividades(data);
+        } else {
+          setAtividades([
+            { id: 1, tipo: 'Plantio', cultura: 'Milho', data: '2025-01-15', status: 'Concluída', insumos: 'Sementes: 50kg', area: '2ha' },
+            { id: 2, tipo: 'Irrigação', cultura: 'Soja', data: '2025-02-20', status: 'Concluída', insumos: 'Água: 5000L', area: '112ha' },
+            { id: 3, tipo: 'Adubação', cultura: 'Café', data: '2025-03-10', status: 'Pendente', insumos: 'NPK: 200kg', area: '5ha' },
+            { id: 4, tipo: 'Aplicação', cultura: 'Soja', data: '2025-03-25', status: 'Concluída', insumos: 'Defensivo: 30L', area: '112ha' }
+          ]);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar atividades:', error);
+        setAtividades([
+          { id: 1, tipo: 'Plantio', cultura: 'Milho', data: '2025-01-15', status: 'Concluída', insumos: 'Sementes: 50kg', area: '2ha' }
+        ]);
+      }
+    };
+
+    fetchAtividades();
+  }, []);
+
+  // API 6: Salvar Nova Atividade
+  const handleSaveActivity = async () => {
+    try {
+      // back: Substituir pela URL real
+      // Endpoint: POST /api/atividades
+      // Resposta esperada: { success: true, message: "Atividade criada" }
+      const response = await fetch('/api/atividades', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        },
+        body: JSON.stringify(newActivity)
+      });
+
+      if (response.ok) {
+        alert('Atividade salva com sucesso!');
+        
+        //back: Descomentar quando as APIs estiverem prontas
+        /*
+        const [safrasRes, atividadesRes] = await Promise.all([
+          fetch('/api/safras', { headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }}),
+          fetch('/api/atividades', { headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }})
+        ]);
+        
+        if (safrasRes.ok) setSafras(await safrasRes.json());
+        if (atividadesRes.ok) setAtividades(await atividadesRes.json());
+        */
+      } else {
+        alert('Erro ao salvar atividade');
+      }
+    } catch (error) {
+      console.error('Erro ao salvar atividade:', error);
+      alert('Erro ao salvar atividade');
+    } finally {
+      setShowNewActivityModal(false);
+      setNewActivity({ tipo: '', cultura: '', data: '', descricao: '', insumos: '', quantidade: '', area: '' });
+    }
+  };
 
   const statusColor: Record<StatusType, string> = { 
     bom: '#10b981', 
@@ -81,12 +311,6 @@ const GestaoSafras = () => {
     { value: 'adubacao', label: 'Adubação', icon: '🌾' },
     { value: 'colheita', label: 'Colheita', icon: '🌽' }
   ];
-
-  const handleSaveActivity = () => {
-    console.log('Nova atividade:', newActivity);
-    setShowNewActivityModal(false);
-    setNewActivity({ tipo: '', cultura: '', data: '', descricao: '', insumos: '', quantidade: '', area: '' });
-  };
 
   return (
     <div style={{ backgroundColor: '#F7F5E0', minHeight: '100%', padding: '20px' }}>
@@ -130,72 +354,89 @@ const GestaoSafras = () => {
         </div>
       </div>
 
-      {activeTab === 'dashboard' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <div>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '16px' }}>Safras Ativas</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
-              {safras.map((safra) => (
-                <div key={safra.id} style={{ 
-                  backgroundColor: '#FFF9E6', 
-                  borderRadius: '16px', 
-                  padding: '24px', 
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-                  border: '2px solid #E8DFC4'
-                }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
-                      <span style={{ fontSize: '3.5rem', marginBottom: '8px' }}>{safra.icon}</span>
-                      <h3 style={{ fontSize: '1.3rem', fontWeight: 'bold', color: '#1f2937', margin: '0 0 4px 0', textAlign: 'center' }}>{safra.cultura}</h3>
-                      <p style={{ fontSize: '0.9rem', color: '#6b7280', margin: '2px 0', textAlign: 'center' }}>{safra.fase}</p>
-                      <p style={{ fontSize: '0.95rem', fontWeight: '600', color: '#374151', margin: '4px 0 0 0', textAlign: 'center' }}>{safra.area} hectares</p>
-                    </div>
-                    <span style={{ fontSize: '2rem' }}>{statusIcon[safra.status]}</span>
-                  </div>
-                  
-                  <div style={{ 
-                    backgroundColor: 'white', 
-                    borderRadius: '10px', 
-                    padding: '14px',
-                    marginBottom: '14px',
-                    border: '1px solid #E8DFC4'
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', marginBottom: '8px' }}>
-                      <span style={{ color: '#6b7280', fontWeight: '500' }}>Fase atual:</span>
-                      <span style={{ fontWeight: '600', color: '#1f2937' }}>{safra.fase}</span>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem' }}>
-                      <span style={{ color: '#6b7280', fontWeight: '500' }}>Dias até colheita:</span>
-                      <span style={{ fontWeight: '700', color: '#16a34a' }}>{safra.diasColheita} dias</span>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', marginBottom: '8px' }}>
-                      <span style={{ color: '#6b7280', fontWeight: '600' }}>Progresso</span>
-                      <span style={{ fontWeight: '700', color: '#1f2937', fontSize: '1rem' }}>{safra.progresso}%</span>
-                    </div>
-                    <div style={{ 
-                      width: '100%', 
-                      backgroundColor: '#E5E7EB', 
-                      borderRadius: '9999px', 
-                      height: '12px',
-                      overflow: 'hidden'
-                    }}>
-                      <div style={{ 
-                        height: '12px', 
-                        borderRadius: '9999px', 
-                        width: `${safra.progresso}%`,
-                        backgroundColor: statusColor[safra.status],
-                        transition: 'width 0.3s ease'
-                      }} />
-                    </div>
-                  </div>
+     {activeTab === 'dashboard' && (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div>
+      <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '16px' }}>Safras Ativas</h2>
+      
+      {loading ? (
+        <div style={{ textAlign: 'center', padding: '40px', color: '#6b7280' }}>
+          <p>Carregando safras...</p>
+        </div>
+      ) : safras.length === 0 ? (
+        <div style={{ 
+          textAlign: 'center', 
+          padding: '60px', 
+          backgroundColor: 'white', 
+          borderRadius: '12px',
+          border: '2px dashed #d1d5db'
+        }}>
+          <p style={{ fontSize: '1.1rem', color: '#6b7280', marginBottom: '8px' }}>📋 Nenhuma safra cadastrada</p>
+          <p style={{ fontSize: '0.9rem', color: '#9ca3af' }}>Cadastre suas safras para começar o acompanhamento</p>
+        </div>
+      ) : (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+          {safras.map((safra) => (
+            <div key={safra.id} style={{ 
+              backgroundColor: '#FFF9E6', 
+              borderRadius: '16px', 
+              padding: '24px', 
+              boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+              border: '2px solid #E8DFC4'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
+                  <span style={{ fontSize: '3.5rem', marginBottom: '8px' }}>{safra.icon}</span>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 'bold', color: '#1f2937', margin: '0 0 4px 0', textAlign: 'center' }}>{safra.cultura}</h3>
+                  <p style={{ fontSize: '0.9rem', color: '#6b7280', margin: '2px 0', textAlign: 'center' }}>{safra.fase}</p>
+                  <p style={{ fontSize: '0.95rem', fontWeight: '600', color: '#374151', margin: '4px 0 0 0', textAlign: 'center' }}>{safra.area} hectares</p>
                 </div>
-              ))}
+                <span style={{ fontSize: '2rem' }}>{statusIcon[safra.status]}</span>
+              </div>
+              
+              <div style={{ 
+                backgroundColor: 'white', 
+                borderRadius: '10px', 
+                padding: '14px',
+                marginBottom: '14px',
+                border: '1px solid #E8DFC4'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', marginBottom: '8px' }}>
+                  <span style={{ color: '#6b7280', fontWeight: '500' }}>Fase atual:</span>
+                  <span style={{ fontWeight: '600', color: '#1f2937' }}>{safra.fase}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem' }}>
+                  <span style={{ color: '#6b7280', fontWeight: '500' }}>Dias até colheita:</span>
+                  <span style={{ fontWeight: '700', color: '#16a34a' }}>{safra.diasColheita} dias</span>
+                </div>
+              </div>
+              
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', marginBottom: '8px' }}>
+                  <span style={{ color: '#6b7280', fontWeight: '600' }}>Progresso</span>
+                  <span style={{ fontWeight: '700', color: '#1f2937', fontSize: '1rem' }}>{safra.progresso}%</span>
+                </div>
+                <div style={{ 
+                  width: '100%', 
+                  backgroundColor: '#E5E7EB', 
+                  borderRadius: '9999px', 
+                  height: '12px',
+                  overflow: 'hidden'
+                }}>
+                  <div style={{ 
+                    height: '12px', 
+                    borderRadius: '9999px', 
+                    width: `${safra.progresso}%`,
+                    backgroundColor: statusColor[safra.status],
+                    transition: 'width 0.3s ease'
+                  }} />
+                </div>
+              </div>
             </div>
-          </div>
-
+          ))}
+        </div>
+      )}
+    </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
             <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
@@ -392,9 +633,11 @@ const GestaoSafras = () => {
                   <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '6px' }}>Cultura</label>
                   <select value={filters.cultura} onChange={(e) => setFilters({...filters, cultura: e.target.value})} style={{ width: '100%', padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: '8px', fontSize: '0.875rem' }}>
                     <option value="">Todas</option>
-                    <option value="milho">Milho</option>
-                    <option value="soja">Soja</option>
-                    <option value="cafe">Café</option>
+                    {safras.map((safra) => (
+                      <option key={safra.id} value={safra.cultura.toLowerCase()}>
+                        {safra.cultura}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -441,6 +684,7 @@ const GestaoSafras = () => {
         </div>
       )}
 
+      {/* Modal */}
       {showNewActivityModal && (
         <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', zIndex: 50 }}>
           <div style={{ backgroundColor: 'white', borderRadius: '16px', maxWidth: '600px', width: '100%', maxHeight: '90vh', overflow: 'auto' }}>
@@ -462,9 +706,11 @@ const GestaoSafras = () => {
                 <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '700', color: '#374151', marginBottom: '6px' }}>Cultura *</label>
                 <select value={newActivity.cultura} onChange={(e) => setNewActivity({...newActivity, cultura: e.target.value})} style={{ width: '100%', padding: '10px 12px', border: '1px solid #d1d5db', borderRadius: '8px', fontSize: '0.875rem' }}>
                   <option value="">Selecione...</option>
-                  <option value="milho">🌽 Milho</option>
-                  <option value="soja">🌱 Soja</option>
-                  <option value="cafe">☕ Café</option>
+                  {safras.map((safra) => (
+                    <option key={safra.id} value={safra.cultura}>
+                      {safra.icon} {safra.cultura}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
