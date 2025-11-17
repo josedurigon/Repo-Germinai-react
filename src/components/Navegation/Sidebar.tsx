@@ -135,17 +135,7 @@ const BarraLateral: React.FC = () => {
       </div>
     
       <nav className="navegacao-barra">
-        <BotaoNavegacao
-          icone={HiOutlineHome}
-          texto="Início"
-          ativo={linkAtivo === "Início"}
-          aoClicar={() => {
-            setLinkAtivo("Início");
-            navigate("/application/Inicio");
-          }}
-        />
-        
-        {/* Cadastro com submenu expansível */}
+     
         <div className="menu-item-expandable">
           <button
             className={`botao-navegacao ${cadastroExpanded ? "ativo" : ""}`}
@@ -210,6 +200,16 @@ const BarraLateral: React.FC = () => {
             </div>
           )}
         </div>
+
+        <BotaoNavegacao
+          icone={HiOutlineDocumentText}
+          texto="Gestão de safras"
+          ativo={linkAtivo === "Gestão de safras"}
+          aoClicar={() => {
+            setLinkAtivo("Gestão de safras");
+            navigate("/application/gestao-safras");
+          }}
+        />
         
         <BotaoNavegacao
           icone={HiOutlineCalendar}
@@ -220,15 +220,7 @@ const BarraLateral: React.FC = () => {
             navigate("/application/atividades");
           }}
         />
-        <BotaoNavegacao
-          icone={HiOutlineDocumentText}
-          texto="Gestão de safras"
-          ativo={linkAtivo === "Gestão de safras"}
-          aoClicar={() => {
-            setLinkAtivo("Gestão de safras");
-            navigate("/application/gestao-safras");
-          }}
-        />
+        
         <BotaoNavegacao
           icone={HiOutlineCurrencyDollar}
           texto="Custos e Gestão Financeira"
