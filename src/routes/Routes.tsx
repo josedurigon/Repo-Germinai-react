@@ -20,6 +20,14 @@ import Estoque from '../pages/estoque/Estoque';
 import Notificacoes from '../pages/notificacoes/Notificacoes';
 import Inicio from '../pages/inicio/Inicio';
 import GestaoCompras from '../pages/Compras/GestaoCompras';
+import Culturas from '../pages/culturas/Culturas';
+import CulturaForm from '../pages/culturas/CulturaForm';
+import Talhoes from '../pages/talhoes/Talhoes';
+import TalhaoForm from '../pages/talhoes/TalhaoForm';
+import Recursos from '../pages/recursos/Recursos';
+import RecursoForm from '../pages/recursos/RecursoForm';
+import Funcionarios from '../pages/funcionarios/Funcionarios';
+import FuncionarioForm from '../pages/funcionarios/FuncionarioForm';
 
 
 const AppRoutes: React.FC = () => {
@@ -48,6 +56,26 @@ const AppRoutes: React.FC = () => {
           <Route path="registro-vendas" element={<RegistroVendas />} />
           <Route path="cadastro-itens-sistema" element={<CadastroItensSistema />} />
           <Route path="contas-pagar-receber" element={<ContasAPagarReceber />} />
+          
+          {/* Rotas de Culturas */}
+          <Route path="culturas" element={<Culturas />} />
+          <Route path="culturas/novo" element={<CulturaForm />} />
+          <Route path="culturas/editar/:id" element={<CulturaForm />} />
+          
+          {/* Rotas de Talhões */}
+          <Route path="talhoes" element={<Talhoes />} />
+          <Route path="talhoes/novo" element={<TalhaoForm />} />
+          <Route path="talhoes/editar/:id" element={<TalhaoForm />} />
+          
+          {/* Rotas de Recursos */}
+          <Route path="recursos" element={<Recursos />} />
+          <Route path="recursos/novo" element={<RecursoForm />} />
+          <Route path="recursos/editar/:id" element={<RecursoForm />} />
+          
+          {/* Rotas de Funcionários */}
+          <Route path="funcionarios" element={<Funcionarios />} />
+          <Route path="funcionarios/novo" element={<FuncionarioForm />} />
+          <Route path="funcionarios/editar/:id" element={<FuncionarioForm />} />
         </Route>
       </Route>
       

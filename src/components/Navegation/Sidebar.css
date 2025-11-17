@@ -41,6 +41,28 @@
   flex-direction: column;
   gap: 4px;
   padding: 0 12px;
+  overflow-y: auto; /* Permite scroll vertical quando necessário */
+  overflow-x: hidden; /* Evita scroll horizontal */
+  max-height: calc(100vh - 200px); /* Limita altura para permitir espaço do header e footer */
+}
+
+/* Estilização da scrollbar */
+.navegacao-barra::-webkit-scrollbar {
+  width: 6px;
+}
+
+.navegacao-barra::-webkit-scrollbar-track {
+  background: #1a2a1e;
+  border-radius: 3px;
+}
+
+.navegacao-barra::-webkit-scrollbar-thumb {
+  background: #2e5434;
+  border-radius: 3px;
+}
+
+.navegacao-barra::-webkit-scrollbar-thumb:hover {
+  background: #3d6843;
 }
 
 .botao-navegacao {
@@ -66,6 +88,56 @@
 .botao-navegacao.ativo {
   background-color: #2e5434;
   color: #ffffff;
+}
+
+/* ====== MENU EXPANSÍVEL ====== */
+.menu-item-expandable {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-item-expandable .botao-navegacao {
+  position: relative;
+  justify-content: space-between;
+}
+
+.icone-chevron {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  font-size: 1rem;
+}
+
+.submenu {
+  display: flex;
+  flex-direction: column;
+  padding-left: 40px;
+  gap: 2px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.submenu-item {
+  background: none;
+  border: none;
+  color: #a8b5a1;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.25s ease;
+  text-align: left;
+}
+
+.submenu-item:hover {
+  background-color: #1d3721;
+  color: #ffffff;
+}
+
+.submenu-item.ativo {
+  background-color: #244428;
+  color: #ffffff;
+  font-weight: 600;
 }
 
 /* ====== ÍCONES ====== */

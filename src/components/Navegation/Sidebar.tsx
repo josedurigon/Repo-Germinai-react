@@ -13,6 +13,8 @@ import {
   HiOutlineArrowLeftOnRectangle,
   HiOutlineBell,
   HiUser,
+  HiChevronDown,
+  HiChevronRight,
 } from "react-icons/hi2";
 import "./Sidebar.css";
 
@@ -72,6 +74,7 @@ const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({
 // Componente principal da barra lateral
 const BarraLateral: React.FC = () => {
   const [linkAtivo, setLinkAtivo] = useState<string>("Gestor Inteligente IA");
+  const [cadastroExpanded, setCadastroExpanded] = useState<boolean>(false);
   const navigate = useNavigate();
   const [username, setUsername] = useState<string | undefined>(undefined);
   const [email, setEmail] = useState<string | undefined>(undefined);
@@ -141,15 +144,64 @@ const BarraLateral: React.FC = () => {
             navigate("/application/Inicio");
           }}
         />
-        <BotaoNavegacao
-          icone={HiOutlinePencil}
-          texto="Cadastro"
-          ativo={linkAtivo === "Cadastro"}
-          aoClicar={() => {
-            setLinkAtivo("Cadastro");
-            navigate("/application/cadastro-itens-sistema");
-          }}
-        />
+        
+        {/* Cadastro com submenu expansível */}
+        <div className="menu-item-expandable">
+          <button
+            className={`botao-navegacao ${cadastroExpanded ? "ativo" : ""}`}
+            onClick={() => setCadastroExpanded(!cadastroExpanded)}
+          >
+            <span className="icone-botao">
+              <HiOutlinePencil className="icone" />
+            </span>
+            <span className="texto-botao">Cadastro</span>
+            <span className="icone-chevron">
+              {cadastroExpanded ? <HiChevronDown /> : <HiChevronRight />}
+            </span>
+          </button>
+          
+          {cadastroExpanded && (
+            <div className="submenu">
+              <button
+                className={`submenu-item ${linkAtivo === "Culturas" ? "ativo" : ""}`}
+                onClick={() => {
+                  setLinkAtivo("Culturas");
+                  navigate("/application/culturas");
+                }}
+              >
+                Culturas
+              </button>
+              <button
+                className={`submenu-item ${linkAtivo === "Talhões" ? "ativo" : ""}`}
+                onClick={() => {
+                  setLinkAtivo("Talhões");
+                  navigate("/application/talhoes");
+                }}
+              >
+                Talhões
+              </button>
+              <button
+                className={`submenu-item ${linkAtivo === "Recursos" ? "ativo" : ""}`}
+                onClick={() => {
+                  setLinkAtivo("Recursos");
+                  navigate("/application/recursos");
+                }}
+              >
+                Recursos (Insumos)
+              </button>
+              <button
+                className={`submenu-item ${linkAtivo === "Funcionários" ? "ativo" : ""}`}
+                onClick={() => {
+                  setLinkAtivo("Funcionários");
+                  navigate("/application/funcionarios");
+                }}
+              >
+                Funcionários
+              </button>
+            </div>
+          )}
+        </div>
+        
         <BotaoNavegacao
           icone={HiOutlineCalendar}
           texto="Atividades"
