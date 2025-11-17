@@ -420,7 +420,7 @@ const Atividades = () => {
           {/* Aba: Histórico */}
           {abaAtiva === 'historico' && (
             <section className="secao-historico">
-              <h2 className="titulo-secao">Histórico de Atividades</h2>
+              <h2 className="titulo-secao">Todas as Atividades</h2>
 
               <div className="header-historico">
                 <input

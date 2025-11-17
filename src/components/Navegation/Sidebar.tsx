@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react";
 import { getMe } from '../../services/AuthService';
 
 import {
-  HiOutlineBars3,
-  HiOutlineHome,
+ HiOutlineHome,
   HiOutlinePencil,
   HiOutlineCalendar,
   HiOutlineDocumentText,
@@ -16,6 +15,8 @@ import {
   HiUser,
 } from "react-icons/hi2";
 import "./Sidebar.css";
+
+
 
 // Tipagem do botão de navegação
 type BotaoNavegacaoProps = {
