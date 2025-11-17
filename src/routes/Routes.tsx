@@ -38,7 +38,6 @@ const AppRoutes: React.FC = () => {
           <Route path="user" element={<UserRegister />} />
           <Route path="users" element={<UserList />} />
           <Route path="reports" element={<h1>Reports</h1>} />
-          <Route path="cadastro" element={<Cadastro />} />
           <Route path="atividades" element={<Atividades />} />
           <Route path="gestao-safras" element={<GestaoSafras />} /> 
           <Route path="custos" element={<Custos />} /> 

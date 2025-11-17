@@ -148,7 +148,7 @@ const BarraLateral: React.FC = () => {
           ativo={linkAtivo === "Cadastro"}
           aoClicar={() => {
             setLinkAtivo("Cadastro");
-            navigate("/application/Cadastro");
+            navigate("/application/cadastro-itens-sistema");
           }}
         />
         <BotaoNavegacao
