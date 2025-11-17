@@ -1,5 +1,3 @@
-import React from 'react';
-
 import BoxShadowPadrao from '../../components/box-shadow/BoxShadowPadrao';
 
 const CadastroItensSistema = () => {

@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { getMe } from '../../services/AuthService';
 
 import {
-  HiOutlineBars3,
   HiOutlineHome,
   HiOutlinePencil,
   HiOutlineCalendar,
