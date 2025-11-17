@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import React, { useEffect, useState } from 'react';
 import BoxShadowPadrao from '../../components/box-shadow/BoxShadowPadrao';
 import AtividadeService from '../../services/AtividadeService';
 import type { Atividade, TipoAtividade, StatusAtividade } from '../../services/AtividadeService';
@@ -788,9 +787,6 @@ const Atividades = () => {
         )}
       </main>
     </div>
-  );
-};
-
   );
 };
 
