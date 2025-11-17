@@ -34,7 +34,8 @@
 }
 
 .aba-botao.ativa {
-  color: #2d9b2d;
+  background-color: #2d9b2d;
+  color: #fff;
   border-bottom-color: #2d9b2d;
 }
 

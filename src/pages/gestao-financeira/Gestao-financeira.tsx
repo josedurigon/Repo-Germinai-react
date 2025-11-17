@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import BoxShadowPadrao from '../../components/box-shadow/BoxShadowPadrao';
 import CardFinanceiro from '../../components/CardFinanceiro/CardFinanceiro';

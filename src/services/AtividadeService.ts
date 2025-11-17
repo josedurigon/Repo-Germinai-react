@@ -18,7 +18,7 @@ export interface Atividade {
   custo?: number; // custo estimado ou realizado
   responsavel?: string; // nome do responsável
   notas?: string;
-  // OBS: historicamente havia `dataCriacao`; agora usamos `dataRegistro`
+
 }
 
 const CHAVE_ATIVIDADES = 'atividades';
