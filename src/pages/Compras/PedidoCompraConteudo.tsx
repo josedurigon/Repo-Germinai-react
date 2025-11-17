@@ -38,11 +38,15 @@ export default function PedidoCompraConteudo() {
   const [filtroStatus, setFiltroStatus] = useState("");
   const [pedidosFiltroCk, setPedidosFiltroCk] = useState<PedidoCompra[]>([]);
   const [filtrosAplicados, setFiltrosAplicados] = useState(false);
+  const [mensagemFiltro, setMensagemFiltro] = useState("");
 
   // Buscar pedidos ao mudar de aba ou datas
   useEffect(() => {
     if (abaAtiva === "listar") {
       buscarPedidos();
+    } else {
+      // Limpar mensagem quando sai da aba de listagem
+      setMensagem("");
     }
   }, [abaAtiva, dataInicio, dataFim]);
 
@@ -133,7 +137,7 @@ export default function PedidoCompraConteudo() {
   // Aplicar filtros na aba de novo pedido
   const aplicarFiltrosNovo = async () => {
     setCarregando(true);
-    setMensagem("");
+    setMensagemFiltro("");
     try {
       let resultado = await listarPedidosPorPeriodo(
         filtroDataInicio || dataInicio,
@@ -155,10 +159,10 @@ export default function PedidoCompraConteudo() {
       setPedidosFiltroCk(resultado);
       setFiltrosAplicados(true);
       if (resultado.length === 0) {
-        setMensagem("Nenhum pedido encontrado com os filtros aplicados.");
+        setMensagemFiltro("Nenhum pedido encontrado com os filtros aplicados.");
       }
     } catch (error) {
-      setMensagem("Erro ao aplicar filtros.");
+      setMensagemFiltro("Erro ao aplicar filtros.");
       console.error(error);
     } finally {
       setCarregando(false);
@@ -173,7 +177,7 @@ export default function PedidoCompraConteudo() {
     setFiltroStatus("");
     setPedidosFiltroCk([]);
     setFiltrosAplicados(false);
-    setMensagem("");
+    setMensagemFiltro("");
   };
 
   return (
@@ -276,6 +280,13 @@ export default function PedidoCompraConteudo() {
               </button>
             </div>
           </div>
+
+          {/* Mensagem de filtro */}
+          {mensagemFiltro && (
+            <div className={`mensagem ${mensagemFiltro.includes("sucesso") ? "sucesso" : "erro"}`} style={{ marginBottom: "20px" }}>
+              {mensagemFiltro}
+            </div>
+          )}
 
           {/* Resultado dos filtros */}
           {filtrosAplicados && pedidosFiltroCk.length > 0 && (
