@@ -3,6 +3,7 @@ export interface Funcionario {
   nome: string;
   cargo: string;
   tipoContratacao: 'Permanente' | 'Temporário' | 'Terceirizado' | 'Diarista' | 'Folguista' | 'Outro';
+  regimeTrabalho?: 'Horas/Semana' | 'Diárias' | 'Mensal' | 'Tempo de Plantio';
   cargaHoraria: number;
   endereco?: string;
   telefone?: string;

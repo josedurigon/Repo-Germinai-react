@@ -109,7 +109,7 @@ export default function Funcionarios() {
                 <th>Nome</th>
                 <th>Cargo</th>
                 <th>Tipo de Contratação</th>
-                <th>Carga Horária</th>
+                <th>Regime de Trabalho</th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -123,7 +123,10 @@ export default function Funcionarios() {
                       {funcionario.tipoContratacao}
                     </span>
                   </td>
-                  <td>{funcionario.cargaHoraria}h/semana</td>
+                  <td>
+                    {funcionario.regimeTrabalho || 'Horas/Semana'}
+                    {funcionario.regimeTrabalho === 'Horas/Semana' && ` (${funcionario.cargaHoraria}h)`}
+                  </td>
                   <td className="acoes">
                     <button
                       className="btn-editar"

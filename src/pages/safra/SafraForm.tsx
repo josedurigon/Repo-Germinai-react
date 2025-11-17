@@ -30,6 +30,7 @@ export default function SafraForm() {
   const [equipe, setEquipe] = useState<FuncionarioSafra[]>([{ funcionarioId: '', funcao: '' }]);
   
   const [formData, setFormData] = useState<SafraCreateRequest>({
+    codigoSafra: '',
     nome: '',
     culturaId: 0,
     responsavelId: 0 as number | string,
@@ -65,6 +66,7 @@ export default function SafraForm() {
       const safra = await buscarSafraPorId(id!);
       if (safra) {
         setFormData({
+          codigoSafra: safra.codigoSafra || '',
           nome: safra.nome,
           culturaId: safra.cultura.id,
           responsavelId: safra.responsavel.id,
@@ -178,17 +180,31 @@ export default function SafraForm() {
         <div className="form-section">
           <h2 className="section-title">1. Identificação da Safra</h2>
           
-          <div className="form-group">
-            <label htmlFor="nome">Nome da Safra *</label>
-            <input
-              type="text"
-              id="nome"
-              name="nome"
-              value={formData.nome}
-              onChange={handleChange}
-              placeholder="Ex: Safra Milho 2024/2025"
-              required
-            />
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="codigoSafra">Código/ID da Safra</label>
+              <input
+                type="text"
+                id="codigoSafra"
+                name="codigoSafra"
+                value={formData.codigoSafra}
+                onChange={handleChange}
+                placeholder="Ex: SAFRA-2024-001"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="nome">Nome da Safra *</label>
+              <input
+                type="text"
+                id="nome"
+                name="nome"
+                value={formData.nome}
+                onChange={handleChange}
+                placeholder="Ex: Safra Milho 2024/2025"
+                required
+              />
+            </div>
           </div>
 
           <div className="form-row">

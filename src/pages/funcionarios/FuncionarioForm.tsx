@@ -19,6 +19,7 @@ export default function FuncionarioForm() {
     nome: '',
     cargo: '',
     tipoContratacao: 'Permanente' as Funcionario['tipoContratacao'],
+    regimeTrabalho: 'Horas/Semana' as 'Horas/Semana' | 'Diárias' | 'Mensal' | 'Tempo de Plantio',
     cargaHoraria: 40,
     endereco: '',
     telefone: '',
@@ -40,6 +41,7 @@ export default function FuncionarioForm() {
           nome: funcionario.nome,
           cargo: funcionario.cargo,
           tipoContratacao: funcionario.tipoContratacao,
+          regimeTrabalho: funcionario.regimeTrabalho || 'Horas/Semana',
           cargaHoraria: funcionario.cargaHoraria,
           endereco: funcionario.endereco || '',
           telefone: funcionario.telefone || '',
@@ -71,7 +73,7 @@ export default function FuncionarioForm() {
       setMensagem('Cargo é obrigatório');
       return false;
     }
-    if (formData.cargaHoraria <= 0) {
+    if (formData.regimeTrabalho === 'Horas/Semana' && formData.cargaHoraria <= 0) {
       setMensagem('Carga horária deve ser maior que 0');
       return false;
     }
@@ -205,6 +207,24 @@ export default function FuncionarioForm() {
           </div>
 
           <div className="form-group">
+            <label htmlFor="regimeTrabalho">Regime de Trabalho *</label>
+            <select
+              id="regimeTrabalho"
+              name="regimeTrabalho"
+              value={formData.regimeTrabalho}
+              onChange={handleChange}
+              required
+            >
+              <option value="Horas/Semana">Horas por Semana</option>
+              <option value="Diárias">Diárias</option>
+              <option value="Mensal">Mensal</option>
+              <option value="Tempo de Plantio">Tempo de Plantio</option>
+            </select>
+          </div>
+        </div>
+
+        {formData.regimeTrabalho === 'Horas/Semana' && (
+          <div className="form-group">
             <label htmlFor="cargaHoraria">Carga Horária (horas/semana) *</label>
             <input
               type="number"
@@ -218,7 +238,7 @@ export default function FuncionarioForm() {
               required
             />
           </div>
-        </div>
+        )}
 
         <div className="form-group">
           <label htmlFor="observacoes">Observações</label>

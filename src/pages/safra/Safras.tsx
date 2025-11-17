@@ -7,6 +7,8 @@ import './Safras.css';
 export default function Safras() {
   const navigate = useNavigate();
   const [safras, setSafras] = useState<SafraResponse[]>([]);
+  const [safrasFiltradas, setSafrasFiltradas] = useState<SafraResponse[]>([]);
+  const [termoPesquisa, setTermoPesquisa] = useState('');
   const [loading, setLoading] = useState(true);
   const [mensagem, setMensagem] = useState('');
 
@@ -19,6 +21,7 @@ export default function Safras() {
       setLoading(true);
       const dados = await listarSafras();
       setSafras(dados);
+      setSafrasFiltradas(dados);
       setMensagem('');
     } catch (error) {
       setMensagem('Erro ao carregar safras');
@@ -38,6 +41,23 @@ export default function Safras() {
         setMensagem('Erro ao deletar safra');
       }
     }
+  };
+
+  const handlePesquisa = () => {
+    if (!termoPesquisa.trim()) {
+      setSafrasFiltradas(safras);
+      return;
+    }
+
+    const termo = termoPesquisa.toLowerCase();
+    const filtradas = safras.filter(safra =>
+      safra.nome.toLowerCase().includes(termo) ||
+      safra.codigoSafra?.toLowerCase().includes(termo) ||
+      safra.cultura.nome.toLowerCase().includes(termo) ||
+      safra.responsavel.nome.toLowerCase().includes(termo) ||
+      formatarStatus(safra.status).toLowerCase().includes(termo)
+    );
+    setSafrasFiltradas(filtradas);
   };
 
   const getStatusBadgeClass = (status: string) => {
@@ -65,12 +85,29 @@ export default function Safras() {
   return (
     <div className="safras-container">
       <div className="safras-header">
-        <h1>Gestão de Safras</h1>
+        <h1>Cadastro de Safras</h1>
         <button 
           className="btn-nova-safra"
           onClick={() => navigate('/application/safras/novo')}
         >
           + Nova Safra
+        </button>
+      </div>
+
+      <div className="filtro-container">
+        <input
+          type="text"
+          placeholder="Pesquisar por nome, código, cultura, responsável ou status..."
+          value={termoPesquisa}
+          onChange={(e) => setTermoPesquisa(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && handlePesquisa()}
+          className="input-pesquisa"
+        />
+        <button 
+          className="btn-pesquisar"
+          onClick={handlePesquisa}
+        >
+          Pesquisar
         </button>
       </div>
 
@@ -82,34 +119,52 @@ export default function Safras() {
 
       {loading ? (
         <div className="loading">Carregando...</div>
-      ) : safras.length === 0 ? (
+      ) : safrasFiltradas.length === 0 ? (
         <div className="sem-dados">
-          Nenhuma safra registrada. <br />
-          <button 
-            className="link-button"
-            onClick={() => navigate('/application/safras/novo')}
-          >
-            Criar uma nova safra
-          </button>
+          {termoPesquisa ? (
+            <>
+              Nenhuma safra encontrada para "{termoPesquisa}". <br />
+              <button 
+                className="link-button"
+                onClick={() => {
+                  setTermoPesquisa('');
+                  setSafrasFiltradas(safras);
+                }}
+              >
+                Limpar pesquisa
+              </button>
+            </>
+          ) : (
+            <>
+              Nenhuma safra registrada. <br />
+              <button 
+                className="link-button"
+                onClick={() => navigate('/application/safras/novo')}
+              >
+                Criar uma nova safra
+              </button>
+            </>
+          )}
         </div>
       ) : (
         <div className="tabela-wrapper">
           <table className="tabela-safras">
             <thead>
               <tr>
+                <th>ID</th>
                 <th>Nome</th>
                 <th>Cultura</th>
                 <th>Responsável</th>
                 <th>Área Total (ha)</th>
                 <th>Data Início</th>
                 <th>Status</th>
-                <th>Progresso</th>
                 <th>Ações</th>
               </tr>
             </thead>
             <tbody>
-              {safras.map((safra) => (
+              {safrasFiltradas.map((safra) => (
                 <tr key={safra.id}>
+                  <td>{safra.codigoSafra || safra.id}</td>
                   <td>{safra.nome}</td>
                   <td>{safra.cultura.nome}</td>
                   <td>{safra.responsavel.nome}</td>
@@ -119,15 +174,6 @@ export default function Safras() {
                     <span className={`badge-status ${getStatusBadgeClass(safra.status)}`}>
                       {formatarStatus(safra.status)}
                     </span>
-                  </td>
-                  <td>
-                    <div className="progresso-bar">
-                      <div 
-                        className="progresso-fill" 
-                        style={{ width: `${safra.progresso}%` }}
-                      />
-                      <span className="progresso-text">{safra.progresso}%</span>
-                    </div>
                   </td>
                   <td className="acoes">
                     <button

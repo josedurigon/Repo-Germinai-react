@@ -39,6 +39,50 @@
   box-shadow: 0 4px 12px rgba(45, 155, 45, 0.3);
 }
 
+.filtro-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-pesquisa {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-pesquisa:focus {
+  outline: none;
+  border-color: #2d9b2d;
+  box-shadow: 0 0 0 3px rgba(45, 155, 45, 0.1);
+}
+
+.btn-pesquisar {
+  background-color: #2d9b2d;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-pesquisar:hover {
+  background-color: #1e6b1e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(45, 155, 45, 0.3);
+}
+
 .mensagem-safras {
   padding: 15px;
   margin-bottom: 20px;

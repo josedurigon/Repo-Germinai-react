@@ -12,6 +12,7 @@ export interface MetaSafraRequest {
 }
 
 export interface SafraCreateRequest {
+  codigoSafra?: string;
   nome: string;
   culturaId: number | string;
   responsavelId: number | string;
@@ -26,6 +27,7 @@ export interface SafraCreateRequest {
 
 export interface SafraResponse {
   id: number;
+  codigoSafra?: string;
   nome: string;
   cultura: {
     id: number;
