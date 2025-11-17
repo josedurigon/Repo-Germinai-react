@@ -13,8 +13,8 @@ export interface MetaSafraRequest {
 
 export interface SafraCreateRequest {
   nome: string;
-  culturaId: number;
-  responsavelId: number;
+  culturaId: number | string;
+  responsavelId: number | string;
   dataInicio: string; // formato: YYYY-MM-DD
   dataFim?: string;
   areaTotalHa: number;
@@ -71,16 +71,16 @@ export async function listarSafrasAtivas(): Promise<SafraResponse[]> {
   return data;
 }
 
-export async function buscarSafraPorId(id: number): Promise<SafraResponse> {
+export async function buscarSafraPorId(id: number | string): Promise<SafraResponse> {
   const { data } = await api.get<SafraResponse>(`/safra/${id}`);
   return data;
 }
 
-export async function atualizarSafra(id: number, request: SafraCreateRequest): Promise<SafraResponse> {
+export async function atualizarSafra(id: number | string, request: SafraCreateRequest): Promise<SafraResponse> {
   const { data } = await api.put<SafraResponse>(`/safra/${id}`, request);
   return data;
 }
 
-export async function deletarSafra(id: number): Promise<void> {
+export async function deletarSafra(id: number | string): Promise<void> {
   await api.delete(`/safra/${id}`);
 }

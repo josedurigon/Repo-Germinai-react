@@ -1,0 +1,274 @@
+.safras-container {
+  padding: 30px;
+  background: #f5f1e8;
+  min-height: 100vh;
+}
+
+.safras-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.safras-header h1 {
+  color: #244428;
+  font-size: 28px;
+  margin: 0;
+}
+
+.btn-nova-safra {
+  background-color: #2d9b2d;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.btn-nova-safra:hover {
+  background-color: #1e6b1e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(45, 155, 45, 0.3);
+}
+
+.mensagem-safras {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-weight: 500;
+  animation: slideIn 0.3s ease;
+}
+
+.mensagem-safras.sucesso {
+  background-color: #d4edda;
+  color: #155724;
+  border-left: 4px solid #28a745;
+}
+
+.mensagem-safras.erro {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-left: 4px solid #dc3545;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #666;
+}
+
+.sem-dados {
+  background: white;
+  padding: 40px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: #999;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: #2d9b2d;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.link-button:hover {
+  color: #1e6b1e;
+}
+
+.tabela-wrapper {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.tabela-safras {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+}
+
+.tabela-safras thead {
+  background-color: #244428;
+  color: white;
+  font-weight: 600;
+}
+
+.tabela-safras th {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 2px solid #1e6b1e;
+}
+
+.tabela-safras tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s ease;
+}
+
+.tabela-safras tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.tabela-safras tbody tr:nth-child(odd) {
+  background-color: #fafafa;
+}
+
+.tabela-safras td {
+  padding: 14px 16px;
+  color: #333;
+}
+
+.acoes {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.badge-status {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.badge-planejamento {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.badge-em-andamento {
+  background-color: #fff3e0;
+  color: #f57c00;
+}
+
+.badge-colheita {
+  background-color: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.badge-finalizada {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge-cancelada {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.badge-default {
+  background-color: #e0e0e0;
+  color: #666;
+}
+
+.progresso-bar {
+  position: relative;
+  width: 100%;
+  height: 24px;
+  background-color: #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.progresso-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #2d9b2d 0%, #4caf50 100%);
+  transition: width 0.3s ease;
+}
+
+.progresso-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  z-index: 1;
+}
+
+.btn-editar,
+.btn-excluir {
+  background: none;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+.btn-editar {
+  color: #2d9b2d;
+}
+
+.btn-editar:hover {
+  background-color: #e8f5e9;
+}
+
+.btn-excluir {
+  color: #dc3545;
+}
+
+.btn-excluir:hover {
+  background-color: #ffe0e0;
+}
+
+@media (max-width: 768px) {
+  .safras-container {
+    padding: 15px;
+  }
+
+  .safras-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .safras-header h1 {
+    font-size: 22px;
+  }
+
+  .btn-nova-safra {
+    width: 100%;
+  }
+
+  .tabela-wrapper {
+    overflow-x: auto;
+  }
+
+  .tabela-safras th,
+  .tabela-safras td {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+}

@@ -28,6 +28,8 @@ import Recursos from '../pages/recursos/Recursos';
 import RecursoForm from '../pages/recursos/RecursoForm';
 import Funcionarios from '../pages/funcionarios/Funcionarios';
 import FuncionarioForm from '../pages/funcionarios/FuncionarioForm';
+import Safras from '../pages/safra/Safras';
+import SafraForm from '../pages/safra/SafraForm';
 
 
 const AppRoutes: React.FC = () => {
@@ -76,6 +78,11 @@ const AppRoutes: React.FC = () => {
           <Route path="funcionarios" element={<Funcionarios />} />
           <Route path="funcionarios/novo" element={<FuncionarioForm />} />
           <Route path="funcionarios/editar/:id" element={<FuncionarioForm />} />
+          
+          {/* Rotas de Safras */}
+          <Route path="safras" element={<Safras />} />
+          <Route path="safras/novo" element={<SafraForm />} />
+          <Route path="safras/editar/:id" element={<SafraForm />} />
         </Route>
       </Route>
       

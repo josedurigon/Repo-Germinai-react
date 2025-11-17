@@ -198,6 +198,15 @@ const BarraLateral: React.FC = () => {
               >
                 Funcionários
               </button>
+              <button
+                className={`submenu-item ${linkAtivo === "Safras" ? "ativo" : ""}`}
+                onClick={() => {
+                  setLinkAtivo("Safras");
+                  navigate("/application/safras");
+                }}
+              >
+                Safras
+              </button>
             </div>
           )}
         </div>

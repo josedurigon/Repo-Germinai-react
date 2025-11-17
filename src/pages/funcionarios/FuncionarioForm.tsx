@@ -20,6 +20,10 @@ export default function FuncionarioForm() {
     cargo: '',
     tipoContratacao: 'Permanente' as Funcionario['tipoContratacao'],
     cargaHoraria: 40,
+    endereco: '',
+    telefone: '',
+    registroId: '',
+    observacoes: '',
   });
 
   useEffect(() => {
@@ -37,6 +41,10 @@ export default function FuncionarioForm() {
           cargo: funcionario.cargo,
           tipoContratacao: funcionario.tipoContratacao,
           cargaHoraria: funcionario.cargaHoraria,
+          endereco: funcionario.endereco || '',
+          telefone: funcionario.telefone || '',
+          registroId: funcionario.registroId || '',
+          observacoes: funcionario.observacoes || '',
         });
       }
     } catch (error) {
@@ -46,7 +54,7 @@ export default function FuncionarioForm() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target as HTMLInputElement;
     setFormData({
       ...formData,
@@ -141,6 +149,44 @@ export default function FuncionarioForm() {
 
         <div className="form-row">
           <div className="form-group">
+            <label htmlFor="registroId">ID de Registro</label>
+            <input
+              type="text"
+              id="registroId"
+              name="registroId"
+              value={formData.registroId}
+              onChange={handleChange}
+              placeholder="Ex: CPF, RG, CTPS"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="telefone">Contato Telefônico</label>
+            <input
+              type="tel"
+              id="telefone"
+              name="telefone"
+              value={formData.telefone}
+              onChange={handleChange}
+              placeholder="Ex: (11) 98765-4321"
+            />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="endereco">Endereço</label>
+          <input
+            type="text"
+            id="endereco"
+            name="endereco"
+            value={formData.endereco}
+            onChange={handleChange}
+            placeholder="Ex: Rua das Flores, 123, Centro"
+          />
+        </div>
+
+        <div className="form-row">
+          <div className="form-group">
             <label htmlFor="tipoContratacao">Tipo de Contratação *</label>
             <select
               id="tipoContratacao"
@@ -152,6 +198,9 @@ export default function FuncionarioForm() {
               <option value="Permanente">Permanente</option>
               <option value="Temporário">Temporário</option>
               <option value="Terceirizado">Terceirizado</option>
+              <option value="Diarista">Diarista</option>
+              <option value="Folguista">Folguista</option>
+              <option value="Outro">Outro</option>
             </select>
           </div>
 
@@ -169,6 +218,18 @@ export default function FuncionarioForm() {
               required
             />
           </div>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="observacoes">Observações</label>
+          <textarea
+            id="observacoes"
+            name="observacoes"
+            value={formData.observacoes}
+            onChange={handleChange}
+            placeholder="Anotações adicionais sobre o funcionário..."
+            rows={4}
+          />
         </div>
 
         <div className="form-buttons">

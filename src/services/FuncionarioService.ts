@@ -2,8 +2,12 @@ export interface Funcionario {
   id: string;
   nome: string;
   cargo: string;
-  tipoContratacao: 'Permanente' | 'Temporário' | 'Terceirizado';
+  tipoContratacao: 'Permanente' | 'Temporário' | 'Terceirizado' | 'Diarista' | 'Folguista' | 'Outro';
   cargaHoraria: number;
+  endereco?: string;
+  telefone?: string;
+  registroId?: string;
+  observacoes?: string;
   dataCriacao: string;
 }
 
