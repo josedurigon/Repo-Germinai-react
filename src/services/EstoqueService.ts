@@ -5,10 +5,14 @@ export interface ItemEstoque {
   nome: string;
   sku?: string;
   quantidade: number; // quantidade atual
+  quantidadeMinima?: number;
+  quantidadeMaxima?: number;
   unidade?: string;
   fornecedorId?: string;
+  categoria?: string;
   chaveIdentificacao?: string;
   dataCriacao: string;
+  ativo?: boolean; // flag para indicar se o item está ativo ou inativo
 }
 
 export interface MovimentoEstoque {
@@ -49,7 +53,7 @@ class EstoqueService {
 
   // Itens
   async criarItem(dados: Omit<ItemEstoque, 'id' | 'dataCriacao'>): Promise<ItemEstoque> {
-    const novo: ItemEstoque = { ...dados, id: this.gerarId(), dataCriacao: new Date().toISOString().split('T')[0] } as ItemEstoque;
+    const novo: ItemEstoque = { ...dados, ativo: true, id: this.gerarId(), dataCriacao: new Date().toISOString().split('T')[0] } as ItemEstoque;
     const itens = this.ler<ItemEstoque>(CHAVE_ITENS);
     itens.push(novo);
     this.salvar(CHAVE_ITENS, itens);
@@ -65,6 +69,15 @@ class EstoqueService {
     return itens.find(i => i.id === id);
   }
 
+  async atualizarItem(id: string, dados: Partial<Omit<ItemEstoque, 'id' | 'dataCriacao'>>): Promise<ItemEstoque | undefined> {
+    const itens = this.ler<ItemEstoque>(CHAVE_ITENS);
+    const idx = itens.findIndex(i => i.id === id);
+    if (idx === -1) return undefined;
+    itens[idx] = { ...itens[idx], ...dados };
+    this.salvar(CHAVE_ITENS, itens);
+    return itens[idx];
+  }
+
   async atualizarQuantidadeItem(id: string, delta: number): Promise<ItemEstoque | undefined> {
     const itens = this.ler<ItemEstoque>(CHAVE_ITENS);
     const idx = itens.findIndex(i => i.id === id);
@@ -77,6 +90,15 @@ class EstoqueService {
   async removerItem(id: string): Promise<void> {
     const itens = this.ler<ItemEstoque>(CHAVE_ITENS).filter(i => i.id !== id);
     this.salvar(CHAVE_ITENS, itens);
+  }
+
+  async toggleAtivoItem(id: string): Promise<ItemEstoque | undefined> {
+    const itens = this.ler<ItemEstoque>(CHAVE_ITENS);
+    const idx = itens.findIndex(i => i.id === id);
+    if (idx === -1) return undefined;
+    itens[idx].ativo = !itens[idx].ativo;
+    this.salvar(CHAVE_ITENS, itens);
+    return itens[idx];
   }
 
   // Movimentos
