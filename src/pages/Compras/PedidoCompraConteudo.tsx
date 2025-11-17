@@ -31,6 +31,14 @@ export default function PedidoCompraConteudo() {
   const [carregando, setCarregando] = useState(false);
   const [mensagem, setMensagem] = useState("");
 
+  // Filtros para aba de novo pedido
+  const [filtroFornecedor, setFiltroFornecedor] = useState("");
+  const [filtroDataInicio, setFiltroDataInicio] = useState("");
+  const [filtroDataFim, setFiltroDataFim] = useState("");
+  const [filtroStatus, setFiltroStatus] = useState("");
+  const [pedidosFiltroCk, setPedidosFiltroCk] = useState<PedidoCompra[]>([]);
+  const [filtrosAplicados, setFiltrosAplicados] = useState(false);
+
   // Buscar pedidos ao mudar de aba ou datas
   useEffect(() => {
     if (abaAtiva === "listar") {
@@ -122,6 +130,52 @@ export default function PedidoCompraConteudo() {
     }
   };
 
+  // Aplicar filtros na aba de novo pedido
+  const aplicarFiltrosNovo = async () => {
+    setCarregando(true);
+    setMensagem("");
+    try {
+      let resultado = await listarPedidosPorPeriodo(
+        filtroDataInicio || dataInicio,
+        filtroDataFim || dataFim
+      );
+
+      // Filtrar por fornecedor
+      if (filtroFornecedor.trim()) {
+        resultado = resultado.filter((p) =>
+          p.fornecedor.toLowerCase().includes(filtroFornecedor.toLowerCase())
+        );
+      }
+
+      // Filtrar por status
+      if (filtroStatus) {
+        resultado = resultado.filter((p) => p.status === filtroStatus);
+      }
+
+      setPedidosFiltroCk(resultado);
+      setFiltrosAplicados(true);
+      if (resultado.length === 0) {
+        setMensagem("Nenhum pedido encontrado com os filtros aplicados.");
+      }
+    } catch (error) {
+      setMensagem("Erro ao aplicar filtros.");
+      console.error(error);
+    } finally {
+      setCarregando(false);
+    }
+  };
+
+  // Limpar filtros
+  const limparFiltros = () => {
+    setFiltroFornecedor("");
+    setFiltroDataInicio("");
+    setFiltroDataFim("");
+    setFiltroStatus("");
+    setPedidosFiltroCk([]);
+    setFiltrosAplicados(false);
+    setMensagem("");
+  };
+
   return (
     <div className="pedido-compra-container">
       {/* Abas */}
@@ -175,6 +229,88 @@ export default function PedidoCompraConteudo() {
               </select>
             </label>
           </div>
+
+          {/* Filtros */}
+          <div className="filtro-periodo" style={{ marginTop: "20px", marginBottom: "20px" }}>
+            <h3>Filtrar Pedidos Existentes</h3>
+            <label>
+              <span>Fornecedor</span>
+              <input
+                value={filtroFornecedor}
+                onChange={(e) => setFiltroFornecedor(e.target.value)}
+                placeholder="Nome do fornecedor"
+              />
+            </label>
+            <label>
+              <span>Data Início</span>
+              <input
+                type="date"
+                value={filtroDataInicio}
+                onChange={(e) => setFiltroDataInicio(e.target.value)}
+              />
+            </label>
+            <label>
+              <span>Data Fim</span>
+              <input
+                type="date"
+                value={filtroDataFim}
+                onChange={(e) => setFiltroDataFim(e.target.value)}
+              />
+            </label>
+            <label>
+              <span>Status</span>
+              <select value={filtroStatus} onChange={(e) => setFiltroStatus(e.target.value)}>
+                <option value="">Todos</option>
+                <option>Rascunho</option>
+                <option>Enviado</option>
+                <option>Aprovado</option>
+                <option>Cancelado</option>
+              </select>
+            </label>
+            <div style={{ display: "flex", gap: "10px" }}>
+              <button onClick={aplicarFiltrosNovo} disabled={carregando}>
+                {carregando ? "Filtrando..." : "Filtrar"}
+              </button>
+              <button onClick={limparFiltros} style={{ backgroundColor: "#ccc", color: "#333" }}>
+                Limpar
+              </button>
+            </div>
+          </div>
+
+          {/* Resultado dos filtros */}
+          {filtrosAplicados && pedidosFiltroCk.length > 0 && (
+            <div className="tabela-scroll" style={{ marginBottom: "20px" }}>
+              <h3>Resultados da Busca</h3>
+              <table className="tabela-listagem">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Fornecedor</th>
+                    <th>Data</th>
+                    <th>Status</th>
+                    <th>Qtd. Itens</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {pedidosFiltroCk.map((pedido) => (
+                    <tr key={pedido.id}>
+                      <td>#{pedido.id}</td>
+                      <td>{pedido.fornecedor}</td>
+                      <td>{new Date(pedido.data).toLocaleDateString("pt-BR")}</td>
+                      <td>
+                        <span className={`status-badge status-${pedido.status.toLowerCase()}`}>
+                          {pedido.status}
+                        </span>
+                      </td>
+                      <td>{pedido.itens.length}</td>
+                      <td>R$ {(pedido.total || 0).toFixed(2)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
 
           <div className="tabela-container">
             <div className="cabecalho-itens">
