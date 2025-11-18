@@ -12,7 +12,9 @@ export interface PedidoCompra {
   id?: number;
   fornecedor: string;
   data: string;
-  status: 'Rascunho' | 'Enviado' | 'Aprovado' | 'Cancelado';
+  statusElaboracao?: 'Rascunho' | 'Revisado';
+  statusAcoes?: 'Aprovado' | 'Recusado';
+  status: 'Rascunho' | 'Enviado' | 'Aprovado' | 'Cancelado' | 'Recusado';
   itens: ItemPedido[];
   total?: number;
   dataCriacao?: string;
