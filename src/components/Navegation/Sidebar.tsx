@@ -49,15 +49,15 @@ const BotaoNavegacao: React.FC<BotaoNavegacaoProps> = ({
   );
 };
 
-// Componente do perfil do usuário (aceita props para manter compatibilidade)
+// Componente do perfil do usuário
 type PerfilUsuarioProps = {
   username?: string;
   email?: string;
 };
 
 const PerfilUsuario: React.FC<PerfilUsuarioProps> = ({
-  username = 'Brooklyn Simmons',
-  email = 'brooklyn@simmons.com',
+  username = 'Usuário',
+  email = 'email@exemplo.com',
 }) => (
   <div className="perfil-usuario">
     <div className="avatar-usuario">
@@ -76,57 +76,108 @@ const BarraLateral: React.FC = () => {
   const [linkAtivo, setLinkAtivo] = useState<string>("Gestor Inteligente IA");
   const [cadastroExpanded, setCadastroExpanded] = useState<boolean>(false);
   const navigate = useNavigate();
-  const [username, setUsername] = useState<string | undefined>(undefined);
-  const [email, setEmail] = useState<string | undefined>(undefined);
+  const [username, setUsername] = useState<string>('Usuário');
+  const [email, setEmail] = useState<string>('email@exemplo.com');
 
   useEffect(() => {
     let mounted = true;
-    (async () => {
+    
+    const loadUserData = async () => {
       try {
+        // Tenta buscar dados do usuário pela API
         const u = await getMe();
         if (!mounted) return;
-        // Username: keep as-is (may be display name or login)
-        if (u.username) setUsername(u.username);
+        
+        // Define o username
+        if (u.username) {
+          setUsername(u.username);
+        }
 
-        // Email resolution priority:
-        // 1) explicit u.email from API
-        // 2) if u.username looks like an email (contains '@'), use it
-        // 3) fallback to token-based inference (handled below)
+        // PRIORIDADE 1: Email direto da API
         if (u.email) {
           setEmail(u.email);
-        } else if (u.username && String(u.username).includes("@")) {
+          return; // Email encontrado, não precisa continuar
+        }
+
+        // PRIORIDADE 2: Username que parece email
+        if (u.username && String(u.username).includes("@")) {
           setEmail(u.username);
-        } else {
-          // try token fallback below (reuse the same logic as in catch)
-          const token = localStorage.getItem('access_token');
-          if (token) {
-            try {
-              const payload = JSON.parse(atob(token.split('.')[1]));
-              const possibleEmail = payload.email || payload.user_email || payload.preferred_username || (payload.sub && String(payload.sub).includes('@') ? payload.sub : undefined);
-              if (possibleEmail) setEmail(possibleEmail);
-            } catch {
-              // ignore token parse errors
+          return;
+        }
+
+        // PRIORIDADE 3: Email armazenado no localStorage (do login)
+        const storedEmail = localStorage.getItem('user_email');
+        if (storedEmail) {
+          setEmail(storedEmail);
+          return;
+        }
+
+        // PRIORIDADE 4: Tenta extrair do token JWT
+        const token = localStorage.getItem('access_token');
+        if (token) {
+          try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            const possibleEmail = 
+              payload.email || 
+              payload.user_email || 
+              payload.preferred_username || 
+              (payload.sub && String(payload.sub).includes('@') ? payload.sub : undefined);
+            
+            if (possibleEmail) {
+              setEmail(possibleEmail);
             }
+          } catch (error) {
+            console.error('Erro ao decodificar token:', error);
           }
         }
-      } catch {
-        // If getMe fails, try to infer from the token payload
+
+      } catch (error) {
+        console.error('Erro ao carregar dados do usuário:', error);
+        
+        // Fallback: tenta carregar do localStorage e do token
+        if (!mounted) return;
+
+        // Tenta pegar email do localStorage primeiro
+        const storedEmail = localStorage.getItem('user_email');
+        if (storedEmail) {
+          setEmail(storedEmail);
+        }
+
+        // Tenta extrair do token
         try {
           const token = localStorage.getItem('access_token');
           if (token) {
             const payload = JSON.parse(atob(token.split('.')[1]));
-            if (!mounted) return;
-            setUsername(payload.sub || payload.username || undefined);
-            const possibleEmail = payload.email || payload.user_email || payload.preferred_username || (payload.sub && String(payload.sub).includes('@') ? payload.sub : undefined);
-            if (possibleEmail) setEmail(possibleEmail);
+            
+            if (!username || username === 'Usuário') {
+              setUsername(payload.sub || payload.username || 'Usuário');
+            }
+            
+            if (!storedEmail) {
+              const possibleEmail = 
+                payload.email || 
+                payload.user_email || 
+                payload.preferred_username || 
+                (payload.sub && String(payload.sub).includes('@') ? payload.sub : undefined);
+              
+              if (possibleEmail) {
+                setEmail(possibleEmail);
+              }
+            }
           }
-        } catch {
-          // ignore
+        } catch (tokenError) {
+          console.error('Erro ao processar token:', tokenError);
         }
       }
-    })();
-    return () => { mounted = false; };
+    };
+
+    loadUserData();
+    
+    return () => { 
+      mounted = false; 
+    };
   }, []);
+
   return (
     <> 
     <aside className="barra-lateral">
@@ -268,6 +319,7 @@ const BarraLateral: React.FC = () => {
             aoClicar={() => {
               // Limpa dados de autenticação
               localStorage.removeItem("access_token");
+              localStorage.removeItem("user_email");
               sessionStorage.clear();
               
               navigate("/home", { replace: true });

@@ -55,6 +55,9 @@ const Login: React.FC = () => {
 
             console.log('Login bem-sucedido! Token:', token);
 
+            // NOVO: Armazena o email do usuário logado
+            localStorage.setItem("user_email", email);
+
             if (remember) {
                 localStorage.setItem("rememberEmail", email);
             } else {
