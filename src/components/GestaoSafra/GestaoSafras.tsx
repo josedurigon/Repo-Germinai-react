@@ -52,7 +52,7 @@ const GestaoSafras = () => {
       try {
         setLoading(true);
         
-        const response = await fetch('/api/safras', {
+        const response = await fetch('/api/safra', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
           }
